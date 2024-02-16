@@ -55,3 +55,4 @@ class MainWindow(QMainWindow):
 
     def show_window3(self):
         self.stacked_widget.setCurrentIndex(2)
+        

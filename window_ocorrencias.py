@@ -17,3 +17,4 @@ class Window_ocorrencias(QWidget):
 
     def return_main_window(self):
         self.main_window.return_main_window()
+        
