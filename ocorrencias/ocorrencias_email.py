@@ -1,10 +1,12 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta 
+from selenium import webdriver
+from tkinter import filedialog
 from time import sleep
+import tkinter as tk
 import openpyxl
 
 TIMER = 1
@@ -23,7 +25,11 @@ def registrar_ocorrencia_email():
     ontem_formatado = datetime(ano, mes, dia, 0, 0)
 
     # Abrindo Excel
-    workbook = openpyxl.load_workbook('C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Planilha_ocorrencias_email.xlsx')
+    root = tk.Tk()
+    root.withdraw() # Esconde a janela principal
+
+    CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
+    workbook = openpyxl.load_workbook(CAMINHO_ARQUIVO)
     sheet = workbook['Planilha1']
 
     # Valores
@@ -92,4 +98,3 @@ def registrar_ocorrencia_email():
         # sleep(1)
         driver.quit()
         mutuarios_anteriores.append(mutuario)
-        print('feito')
