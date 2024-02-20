@@ -3,26 +3,22 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from datetime import datetime, timedelta 
-from selenium import webdriver
 from tkinter import filedialog
+from selenium import webdriver
 from time import sleep
 import tkinter as tk
 import openpyxl
 
-TIMER = 1
+TIMER = 0.75
 
-
-def registrar_ocorrencia_email():
+def registrar_ocorrencia_da_data(data):
     # Dia de ontem
-    ontem = datetime.now()
-    ontem_formatado_preencher = str(ontem.strftime('%d/%m/%Y'))
-    ontem_formatado = str(ontem.strftime('%d%m%Y'))
+    dia_digitado = int(data[0:2])
+    mes_digitado = int(data[3:5])
+    ano_digitado = int(data[6:10])
+    dia_formatado = datetime(ano_digitado, mes_digitado, dia_digitado, 0, 0)
 
-    dia = int(ontem_formatado[0:2])
-    mes = int(ontem_formatado[2:4])
-    ano = int(ontem_formatado[4:8])
-
-    ontem_formatado = datetime(ano, mes, dia, 0, 0)
+    dia_formatado_preencher = data
 
     # Abrindo Excel
     root = tk.Tk()
@@ -35,24 +31,22 @@ def registrar_ocorrencia_email():
     # Valores
     mutuarios = []
     descricoes = []
+    nomes = []
     cobranca = '13'
-    mutuarios_anteriores = []
 
     # Pegando valores do excel e adicionando a lista
     for row in sheet.iter_rows(values_only=True):
-        mutuarios.append(row[0])
-        descricoes.append(row[1])
+        if dia_formatado == row[6]:
+            mutuarios.append(row[0])
+            descricoes.append(row[5])
+            nomes.append(row[7])
 
     for n in range(len(mutuarios)):
         mutuario = mutuarios[n]
         descricao = descricoes[n]
-        nome = 'Cris'
+        nome = nomes[n]
 
-        # Filtrando nomes iguais
-        if mutuario in mutuarios_anteriores:
-            continue
-
-        # Mostrando Mutuario
+        # Nome do mutuario
         print(mutuario)
 
         # Acessando o site
@@ -81,20 +75,21 @@ def registrar_ocorrencia_email():
         preenchendo_assunto_2 = driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
         preenchendo_assunto_2.send_keys(cobranca)
         preenchendo_assunto_2.send_keys(Keys.ENTER)
+        sleep(TIMER)
 
         # Inserindo data
         inserindo_data = driver.find_element(By.ID, 'Data')
         inserindo_data.clear()
         sleep(TIMER)
-        inserindo_data.send_keys(str(ontem_formatado_preencher))
+        inserindo_data.send_keys(str(dia_formatado_preencher))
 
         # Inserindo "Descrição"
         inserindo_descricao = driver.find_element(By.NAME, 'Descricao')
         inserindo_descricao.send_keys(f'{nome}: {descricao}')
+        sleep(TIMER)
 
         # Encontra o "Incluir Ocorrência"
-        # incluindo = driver.find_element(By.ID, 'createBtn')
-        # incluindo.send_keys(Keys.ENTER)
-        # sleep(1)
+        incluindo = driver.find_element(By.ID, 'createBtn')
+        incluindo.send_keys(Keys.ENTER)
+        sleep(TIMER)
         driver.quit()
-        mutuarios_anteriores.append(mutuario)
