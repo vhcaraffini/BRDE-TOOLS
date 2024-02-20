@@ -12,17 +12,9 @@ import openpyxl
 TIMER = 1
 
 
-def registrar_ocorrencia_email():
-    # Dia de ontem
-    ontem = datetime.now()
-    ontem_formatado_preencher = str(ontem.strftime('%d/%m/%Y'))
-    ontem_formatado = str(ontem.strftime('%d%m%Y'))
-
-    dia = int(ontem_formatado[0:2])
-    mes = int(ontem_formatado[2:4])
-    ano = int(ontem_formatado[4:8])
-
-    ontem_formatado = datetime(ano, mes, dia, 0, 0)
+def registrar_ocorrencia_email(data):
+    # Dia do registro
+    dia_formatado_preencher = data
 
     # Abrindo Excel
     root = tk.Tk()
@@ -86,7 +78,7 @@ def registrar_ocorrencia_email():
         inserindo_data = driver.find_element(By.ID, 'Data')
         inserindo_data.clear()
         sleep(TIMER)
-        inserindo_data.send_keys(str(ontem_formatado_preencher))
+        inserindo_data.send_keys(str(dia_formatado_preencher))
 
         # Inserindo "Descrição"
         inserindo_descricao = driver.find_element(By.NAME, 'Descricao')

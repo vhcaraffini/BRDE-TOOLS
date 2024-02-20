@@ -16,17 +16,20 @@ class Window_ocorrencias(QWidget):
         self.layout.addWidget(self.label_ocorrencias)
 
         # Adicionando uma caixa de entrada para a data
-        self.date_input = QLineEdit()
-        self.date_input.setPlaceholderText("Data da Ocorrência: (dd/mm/aaaa)")
-        self.layout.addWidget(self.date_input)
+        self.data_entrada = QLineEdit()
+        self.data_entrada.setPlaceholderText("Data da Ocorrência: (dd/mm/aaaa)")
+        self.layout.addWidget(self.data_entrada)
 
         # Conectar o sinal clicked do botão à função para registrar a ocorrência do referente dia
-        registrar_button = QPushButton("Registrar Ocorrência do referente dia")
-        registrar_button.clicked.connect(self.enviar_data_de_registramento_ocorrencia)
-        self.layout.addWidget(registrar_button)
+        registrar_botao_dia = QPushButton("Registrar Ocorrência do referente dia")
+        registrar_botao_dia.clicked.connect(self.enviar_data_de_registramento_ocorrencia)
+        self.layout.addWidget(registrar_botao_dia)
+
+        registrar_button_email = QPushButton("Registrar Ocorrência de e-mails")
+        registrar_button_email.clicked.connect(self.enviar_data_de_registramento_ocorrencia_email)
+        self.layout.addWidget(registrar_button_email)
 
         # Ações dos botões da janela
-        self.layout.addWidget(QPushButton("Registrar Ocorrência de e-mails", clicked=registrar_ocorrencia_email))
         self.layout.addWidget(QPushButton("Voltar", clicked=self.return_main_window))
 
         self.main_window = main_window
@@ -38,8 +41,14 @@ class Window_ocorrencias(QWidget):
     # Função para registrar a ocorrência do referente dia
     def enviar_data_de_registramento_ocorrencia(self):
         # Obtendo a data atual na caixa de entrada
-        date = self.date_input.text()
+        date = self.data_entrada.text()
 
-        print(date)
         # Chamando a função de registro de ocorrência do referente dia com a data atual
         registrar_ocorrencia_da_data(date)
+
+    def enviar_data_de_registramento_ocorrencia_email(self):
+        # Obtendo a data atual na caixa de entrada
+        date = self.data_entrada.text()
+
+        # Chamando a função de registro de ocorrência do referente dia com a data atual
+        registrar_ocorrencia_email(date)
