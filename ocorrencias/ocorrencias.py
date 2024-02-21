@@ -54,6 +54,7 @@ def registrar_ocorrencia_da_data(data):
         driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
 
         # Encontrando e preenchendo barra de pesquisa
+        sleep(TIMER)
         encontrando_barra_pesquisa = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'NomeCnpjCpf')))
         encontrando_barra_pesquisa.send_keys(mutuario)
         encontrando_barra_pesquisa.send_keys(Keys.ENTER)

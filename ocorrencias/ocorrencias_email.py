@@ -85,8 +85,8 @@ def registrar_ocorrencia_email(data):
         inserindo_descricao.send_keys(f'{nome}: {descricao}')
 
         # Encontra o "Incluir Ocorrência"
-        # incluindo = driver.find_element(By.ID, 'createBtn')
-        # incluindo.send_keys(Keys.ENTER)
-        # sleep(1)
+        incluindo = driver.find_element(By.ID, 'createBtn')
+        incluindo.send_keys(Keys.ENTER)
+        sleep(TIMER)
         driver.quit()
         mutuarios_anteriores.append(mutuario)
