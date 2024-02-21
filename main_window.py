@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QStackedWidget, QLabel
 from window_ocorrencias import Window_ocorrencias
-from window_emails import window_emails
+from window_bagri import window_oficio_bagri
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.window_ocorrencias)
 
         # Janela 3
-        self.window_emails = window_emails(self)
+        self.window_emails = window_oficio_bagri(self)
         self.stacked_widget.addWidget(self.window_emails)
 
     def return_main_window(self):

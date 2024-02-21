@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QVBoxLayout, QWidget, QLabel, QPushButton
 
-class window_emails(QWidget):
+class window_oficio_bagri(QWidget):
     def __init__(self, main_window):
         super().__init__()
 
@@ -8,7 +8,7 @@ class window_emails(QWidget):
 
         self.layout = QVBoxLayout(self)
 
-        self.label_emails = QLabel("E-mails")
+        self.label_emails = QLabel("Gerador de Oficios para o Banco do Agricultor")
         self.layout.addWidget(self.label_emails)
 
         self.layout.addWidget(QPushButton("Voltar", clicked=self.return_main_window))
