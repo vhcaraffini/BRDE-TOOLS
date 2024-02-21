@@ -23,8 +23,8 @@ class MainWindow(QMainWindow):
         self.button_back.clicked.connect(self.return_main_window)
 
         # Janela 1
-        self.window_main = QWidget()
-        self.layout_window_main = QVBoxLayout(self.window_main)
+        self.window_oficio = QWidget()
+        self.layout_window_main = QVBoxLayout(self.window_oficio)
         self.label_main_window = QLabel("Ferramentas")
         self.layout_window_main.addWidget(self.label_main_window)
 
@@ -33,19 +33,19 @@ class MainWindow(QMainWindow):
         self.layout_window_main.addWidget(self.button_to_window_ocorrencias)
         self.button_to_window_ocorrencias.clicked.connect(self.show_window2)
 
-        self.button_to_window_emails = QPushButton("E-mails")
-        self.layout_window_main.addWidget(self.button_to_window_emails)
-        self.button_to_window_emails.clicked.connect(self.show_window3)
+        self.button_to_window_bagri = QPushButton("Oficios Banco do Agricultor")
+        self.layout_window_main.addWidget(self.button_to_window_bagri)
+        self.button_to_window_bagri.clicked.connect(self.show_window3)
 
-        self.stacked_widget.addWidget(self.window_main)
+        self.stacked_widget.addWidget(self.window_oficio)
 
         # Janela 2
         self.window_ocorrencias = Window_ocorrencias(self)
         self.stacked_widget.addWidget(self.window_ocorrencias)
 
         # Janela 3
-        self.window_emails = window_oficio_bagri(self)
-        self.stacked_widget.addWidget(self.window_emails)
+        self.window_bagri = window_oficio_bagri(self)
+        self.stacked_widget.addWidget(self.window_bagri)
 
     def return_main_window(self):
         self.stacked_widget.setCurrentIndex(0)
