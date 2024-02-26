@@ -8,6 +8,7 @@ def get_user_home_folder():
     else:
         raise OSError('Sistema operacional não suportado')
 
-# Exemplo de uso
-user_home_folder = get_user_home_folder()
-print(f'A pasta do usuário é: {user_home_folder}')
+
+def create_folder(folder_path, folder_name):
+    folder_full_path = os.path.join(folder_path, folder_name)
+    os.makedirs(folder_full_path, exist_ok=True)

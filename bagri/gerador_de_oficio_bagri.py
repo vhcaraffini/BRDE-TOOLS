@@ -9,11 +9,14 @@ from tkinter import filedialog
 from functools import partial
 import tkinter as tk
 import openpyxl
+from windows_functions import get_user_home_folder, create_folder
 
 
 def gerar_oficio_bagri():
+    GET_PATH = get_user_home_folder()
+    create_folder(GET_PATH, 'Documentos')
+    create_folder(f'{GET_PATH}/Documentos', 'Oficios')
     PATH_IMAGE = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens'
-    PATH = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Documentos/OFICIO'
     
     # Caminho do excel
     root = tk.Tk()
@@ -95,7 +98,7 @@ def gerar_oficio_bagri():
 
         estilos = getSampleStyleSheet()
 
-        nome_do_arquivo = F'{PATH}/Oficios/Oficio de {cliente}.pdf'
+        nome_do_arquivo = F'{GET_PATH}/Documentos/Oficios/Oficio de {cliente}.pdf'
 
         TAMANHO_DAS_PAGINAS = pagesizes.portrait(pagesizes.A4)
 
