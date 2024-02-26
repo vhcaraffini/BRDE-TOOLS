@@ -2,7 +2,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from datetime import datetime, timedelta 
+from datetime import datetime
 from tkinter import filedialog
 from selenium import webdriver
 from time import sleep
