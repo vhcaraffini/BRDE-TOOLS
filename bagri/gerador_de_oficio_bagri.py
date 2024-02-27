@@ -1,6 +1,6 @@
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, PageBreak, PageTemplate, Image
 from bagri.funcoes import data_manuscrita, transforma_ponto_em_virgula, configura_paragrafo, cabecalho_e_rodape
-from windows_functions import get_user_home_folder, create_folder
+from functions_for_windows import get_user_home_folder, create_folder
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus.frames import Frame
 from datetime import datetime, timedelta
