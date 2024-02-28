@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QStackedWidget, QLabel
 from window_ocorrencias import Window_ocorrencias
 from window_bagri import window_oficio_bagri
+from window_termos import window_termos
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -37,6 +38,10 @@ class MainWindow(QMainWindow):
         self.layout_window_main.addWidget(self.button_to_window_bagri)
         self.button_to_window_bagri.clicked.connect(self.show_window3)
 
+        self.button_to_window_separador = QPushButton("Separador de Termos")
+        self.layout_window_main.addWidget(self.button_to_window_separador)
+        self.button_to_window_separador.clicked.connect(self.show_window4)
+
         self.stacked_widget.addWidget(self.window_oficio)
 
         # Janela 2
@@ -47,6 +52,10 @@ class MainWindow(QMainWindow):
         self.window_bagri = window_oficio_bagri(self)
         self.stacked_widget.addWidget(self.window_bagri)
 
+        # Janela 4
+        self.window_termo = window_termos(self)
+        self.stacked_widget.addWidget(self.window_termo)
+
     def return_main_window(self):
         self.stacked_widget.setCurrentIndex(0)
         
@@ -55,4 +64,7 @@ class MainWindow(QMainWindow):
 
     def show_window3(self):
         self.stacked_widget.setCurrentIndex(2)
+
+    def show_window4(self):
+        self.stacked_widget.setCurrentIndex(3)
         
