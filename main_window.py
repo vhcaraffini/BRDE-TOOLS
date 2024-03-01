@@ -10,6 +10,27 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("BRDE TOOLS")
         self.resize(800, 600)
 
+        # Configuração global de estilo
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #FFFFFF;
+                border: 5px solid back;
+                titlebar-background: green;
+            }
+            QPushButton {
+                background-color: #006400;
+                border: 2px solid black;
+                border-radius: 5px;
+                padding: 10px;
+                color: #FFFFFF;
+                width: 100px;
+                height: 50px;
+            }
+            QLabel {
+                color: #006400;               
+            }
+        """)
+
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
 
@@ -19,46 +40,47 @@ class MainWindow(QMainWindow):
         self.stacked_widget = QStackedWidget()
         self.layout.addWidget(self.stacked_widget)
 
-        # Botão para voltar à janela principal
-        self.button_back = QPushButton("Voltar")
-        self.button_back.clicked.connect(self.return_main_window)
+        # Adicione as outras janelas aqui
+        self.add_windows()
 
-        # Janela 1
-        self.window_oficio = QWidget()
-        self.layout_window_main = QVBoxLayout(self.window_oficio)
-        self.label_main_window = QLabel("Ferramentas")
-        self.layout_window_main.addWidget(self.label_main_window)
+        # Definindo a opacidade da janela
+        self.setWindowOpacity(0.95)
 
-        # Criar botões para alternar entre as janelas
-        self.button_to_window_ocorrencias = QPushButton("Ocorrências")
-        self.layout_window_main.addWidget(self.button_to_window_ocorrencias)
-        self.button_to_window_ocorrencias.clicked.connect(self.show_window2)
+    def add_windows(self):
+        # Janela principal
+        self.window_BRDE_TOOLS = QWidget()
+        layout_window_main = QVBoxLayout(self.window_BRDE_TOOLS)
+        label_main_window = QLabel("Ferramentas")
+        layout_window_main.addWidget(label_main_window)
 
-        self.button_to_window_bagri = QPushButton("Oficios Banco do Agricultor")
-        self.layout_window_main.addWidget(self.button_to_window_bagri)
-        self.button_to_window_bagri.clicked.connect(self.show_window3)
+        # Botões para alternar entre as janelas
+        button_to_window_ocorrencias = QPushButton("Ocorrências")
+        button_to_window_ocorrencias.clicked.connect(self.show_window2)
+        layout_window_main.addWidget(button_to_window_ocorrencias)
 
-        self.button_to_window_separador = QPushButton("Separador de Termos")
-        self.layout_window_main.addWidget(self.button_to_window_separador)
-        self.button_to_window_separador.clicked.connect(self.show_window4)
+        button_to_window_bagri = QPushButton("Oficios Banco do Agricultor")
+        button_to_window_bagri.clicked.connect(self.show_window3)
+        layout_window_main.addWidget(button_to_window_bagri)
 
-        self.stacked_widget.addWidget(self.window_oficio)
+        button_to_window_termos = QPushButton("Separador de Termos")
+        button_to_window_termos.clicked.connect(self.show_window4)
+        layout_window_main.addWidget(button_to_window_termos)
 
-        # Janela 2
+        self.stacked_widget.addWidget(self.window_BRDE_TOOLS)
+
+        # Janelas específicas
         self.window_ocorrencias = Window_ocorrencias(self)
         self.stacked_widget.addWidget(self.window_ocorrencias)
 
-        # Janela 3
         self.window_bagri = window_oficio_bagri(self)
         self.stacked_widget.addWidget(self.window_bagri)
 
-        # Janela 4
         self.window_termo = window_termos(self)
         self.stacked_widget.addWidget(self.window_termo)
 
     def return_main_window(self):
         self.stacked_widget.setCurrentIndex(0)
-        
+
     def show_window2(self):
         self.stacked_widget.setCurrentIndex(1)
 
@@ -67,4 +89,3 @@ class MainWindow(QMainWindow):
 
     def show_window4(self):
         self.stacked_widget.setCurrentIndex(3)
-        
