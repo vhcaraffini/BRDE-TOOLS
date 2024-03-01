@@ -15,16 +15,17 @@ class MainWindow(QMainWindow):
             QMainWindow {
                 background-color: #FFFFFF;
                 border: 5px solid back;
-                titlebar-background: green;
+                
             }
             QPushButton {
                 background-color: #006400;
-                border: 2px solid black;
+                border: 0 2xp 2xp 2xp solid black;
                 border-radius: 5px;
                 padding: 10px;
+                margin: 10px 5px 10px 300px;
                 color: #FFFFFF;
-                width: 100px;
-                height: 50px;
+                width: 75px;
+                height: 40px;
             }
             QLabel {
                 color: #006400;               
@@ -42,9 +43,6 @@ class MainWindow(QMainWindow):
 
         # Adicione as outras janelas aqui
         self.add_windows()
-
-        # Definindo a opacidade da janela
-        self.setWindowOpacity(0.95)
 
     def add_windows(self):
         # Janela principal
