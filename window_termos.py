@@ -5,8 +5,6 @@ class window_termos(QWidget):
     def __init__(self, main_window):
         super().__init__()
 
-        self.resize(800, 600)
-
         self.layout = QVBoxLayout(self)
 
         self.label_oficios = QLabel("Gestor de Termos")

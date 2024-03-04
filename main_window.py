@@ -8,27 +8,34 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("BRDE TOOLS")
-        self.resize(800, 600)
+        self.resize(700, 500)
 
         # Configuração global de estilo
         self.setStyleSheet("""
             QMainWindow {
-                background-color: #FFFFFF;
-                border: 5px solid back;
+                background-color: #98FB98;
+                border: 0 5xp 5xp 5px solid back;
                 
             }
             QPushButton {
                 background-color: #006400;
-                border: 0 2xp 2xp 2xp solid black;
+                border: 2xp 2xp 2xp 2xp solid black;
                 border-radius: 5px;
                 padding: 10px;
-                margin: 10px 5px 10px 300px;
+                margin: 0px 5px 20px 300px;
                 color: #FFFFFF;
                 width: 75px;
                 height: 40px;
+                font-family: Roboto;
+                font-size: 17px;
             }
             QLabel {
-                color: #006400;               
+                color: #006400;
+                width: 100px;
+                height: 50px;
+                margin: 0;
+                padding: 0;
+                border: 2xp 2xp 2xp 2xp solid black;
             }
         """)
 

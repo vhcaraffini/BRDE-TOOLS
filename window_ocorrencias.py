@@ -6,9 +6,6 @@ class Window_ocorrencias(QWidget):
     def __init__(self, main_window):
         super().__init__()
 
-        # Tamanho da janela em pixels
-        self.resize(800, 600)
-
         self.layout = QVBoxLayout(self)
 
         # Criando botão ocorrencia
