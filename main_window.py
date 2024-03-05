@@ -13,16 +13,16 @@ class MainWindow(QMainWindow):
         # Configuração global de estilo
         self.setStyleSheet("""
             QMainWindow {
-                background-color: #98FB98;
-                border: 0 5xp 5xp 5px solid back;
+                background-color: #8FBC8F;
+                border: 0 5px 5px 5px solid back;
                 
             }
             QPushButton {
                 background-color: #006400;
-                border: 2xp 2xp 2xp 2xp solid black;
+                border: 4px 4px 4px 4px solid black;
                 border-radius: 5px;
                 padding: 10px;
-                margin: 0px 5px 20px 300px;
+                margin: 0px 40px 10px 40px;
                 color: #FFFFFF;
                 width: 75px;
                 height: 40px;
@@ -30,12 +30,14 @@ class MainWindow(QMainWindow):
                 font-size: 17px;
             }
             QLabel {
-                color: #006400;
+                color: #000000;
                 width: 100px;
                 height: 50px;
-                margin: 0;
+                margin: 0px 70px 0 70px;
                 padding: 0;
-                border: 2xp 2xp 2xp 2xp solid black;
+                border: 2px 2px 2px 2px solid black;
+                font-family: Roboto;
+                font-size: 26px;
             }
         """)
 
@@ -55,7 +57,7 @@ class MainWindow(QMainWindow):
         # Janela principal
         self.window_BRDE_TOOLS = QWidget()
         layout_window_main = QVBoxLayout(self.window_BRDE_TOOLS)
-        label_main_window = QLabel("Ferramentas")
+        label_main_window = QLabel("BRDE TOOLS")
         layout_window_main.addWidget(label_main_window)
 
         # Botões para alternar entre as janelas
