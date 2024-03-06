@@ -9,7 +9,7 @@ from time import sleep
 import tkinter as tk
 import openpyxl
 
-TIMER = 0.75
+TIMER = 1
 
 def registrar_ocorrencia_da_data(data):
     # Dia de ontem

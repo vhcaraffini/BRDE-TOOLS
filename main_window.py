@@ -1,7 +1,11 @@
 from PySide6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QStackedWidget, QLabel
+from PySide6.QtGui import QPixmap, QIcon
 from window_ocorrencias import Window_ocorrencias
 from window_bagri import window_oficio_bagri
 from window_termos import window_termos
+import os
+
+diretorio_atual = os.getcwd()
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -26,20 +30,29 @@ class MainWindow(QMainWindow):
                 color: #FFFFFF;
                 width: 75px;
                 height: 40px;
-                font-family: Roboto;
+                font-family: Candara;
                 font-size: 17px;
             }
             QLabel {
-                color: #000000;
+                color: #006400;
                 width: 100px;
                 height: 50px;
                 margin: 0px 70px 0 70px;
                 padding: 0;
                 border: 2px 2px 2px 2px solid black;
-                font-family: Roboto;
-                font-size: 26px;
+                font-family: Candara;
+                font-size: 29px;
             }
         """)
+
+        # Definindo o ícone da janela
+        self.setWindowIcon(QIcon(f"{diretorio_atual}/image/BRDE_favicon.png"))
+
+        # # Carregando a imagem usando QPixmap
+        # pixmap = QPixmap("caminho/para/sua/imagem.jpg")
+
+        # # Definindo a imagem no QLabel
+        # self.image_label.setPixmap(pixmap)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
