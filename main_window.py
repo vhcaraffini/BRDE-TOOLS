@@ -1,8 +1,9 @@
 from PySide6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QStackedWidget, QLabel
-from PySide6.QtGui import QPixmap, QIcon
 from window_ocorrencias import Window_ocorrencias
 from window_bagri import window_oficio_bagri
+from PySide6.QtGui import QPixmap, QIcon
 from window_termos import window_termos
+from window_emails import window_email
 import os
 
 diretorio_atual = os.getcwd()
@@ -23,12 +24,12 @@ class MainWindow(QMainWindow):
         # Configuração global de estilo
         self.setStyleSheet("""
             QMainWindow {
-                background-color: #8FBC8F;
+                background-color: #F5F5DC;
                 border: 0 5px 5px 5px solid back;
                 
             }
             QPushButton {
-                background-color: #006400;
+                background-color: #007553;
                 border: 4px 4px 4px 4px solid black;
                 border-radius: 5px;
                 padding: 10px;
@@ -75,7 +76,7 @@ class MainWindow(QMainWindow):
         # # Carregando a imagem usando QPixmap
         image_label = QLabel()
         pixmap = QPixmap(f"{diretorio_atual}/images/logo_BRDE.png")
-        pixmap_redimensionado = pixmap.scaled(500, 300)
+        pixmap_redimensionado = pixmap.scaled(700, 300)
         image_label.setPixmap(pixmap_redimensionado)
         layout_window_main.addWidget(image_label)
 
@@ -92,6 +93,10 @@ class MainWindow(QMainWindow):
         button_to_window_termos.clicked.connect(self.show_window4)
         layout_window_main.addWidget(button_to_window_termos)
 
+        button_to_window_emails = QPushButton("Enviador de E-mails")
+        button_to_window_emails.clicked.connect(self.show_window5)
+        layout_window_main.addWidget(button_to_window_emails)
+
         self.stacked_widget.addWidget(self.window_BRDE_TOOLS)
 
         # Janelas específicas
@@ -104,6 +109,9 @@ class MainWindow(QMainWindow):
         self.window_termo = window_termos(self)
         self.stacked_widget.addWidget(self.window_termo)
 
+        self.window_emails = window_email(self)
+        self.stacked_widget.addWidget(self.window_emails)
+
     def return_main_window(self):
         self.stacked_widget.setCurrentIndex(0)
 
@@ -115,3 +123,6 @@ class MainWindow(QMainWindow):
 
     def show_window4(self):
         self.stacked_widget.setCurrentIndex(3)
+
+    def show_window5(self):
+        self.stacked_widget.setCurrentIndex(4)
