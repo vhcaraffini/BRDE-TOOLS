@@ -11,8 +11,14 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Definindo titulo da interface
         self.setWindowTitle("BRDE TOOLS")
+
+        # Definindo tamanho da interface
         self.resize(700, 500)
+
+        # Definindo o ícone da janela
+        self.setWindowIcon(QIcon(f"{diretorio_atual}/images/BRDE_favicon.png"))
 
         # Configuração global de estilo
         self.setStyleSheet("""
@@ -33,26 +39,19 @@ class MainWindow(QMainWindow):
                 font-family: Candara;
                 font-size: 17px;
             }
-            QLabel {
-                color: #006400;
-                width: 100px;
-                height: 50px;
-                margin: 0px 70px 0 70px;
-                padding: 0;
-                border: 2px 2px 2px 2px solid black;
-                font-family: Candara;
-                font-size: 29px;
-            }
+            # QLabel {
+            #     color: #006400;
+            #     width: 100px;
+            #     height: 50px;
+            #     margin: 0px 70px 0 70px;
+            #     padding: 0;
+            #     border: 2px 2px 2px 2px solid black;
+            #     font-family: Candara;
+            #     font-size: 29px;
+            # }
         """)
 
-        # Definindo o ícone da janela
-        self.setWindowIcon(QIcon(f"{diretorio_atual}/image/BRDE_favicon.png"))
 
-        # # Carregando a imagem usando QPixmap
-        # pixmap = QPixmap("caminho/para/sua/imagem.jpg")
-
-        # # Definindo a imagem no QLabel
-        # self.image_label.setPixmap(pixmap)
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -70,8 +69,15 @@ class MainWindow(QMainWindow):
         # Janela principal
         self.window_BRDE_TOOLS = QWidget()
         layout_window_main = QVBoxLayout(self.window_BRDE_TOOLS)
-        label_main_window = QLabel("BRDE TOOLS")
-        layout_window_main.addWidget(label_main_window)
+        # label_main_window = QLabel("BRDE TOOLS")
+        # layout_window_main.addWidget(label_main_window)
+
+        # # Carregando a imagem usando QPixmap
+        image_label = QLabel()
+        pixmap = QPixmap(f"{diretorio_atual}/images/logo_BRDE.png")
+        pixmap_redimensionado = pixmap.scaled(500, 300)
+        image_label.setPixmap(pixmap_redimensionado)
+        layout_window_main.addWidget(image_label)
 
         # Botões para alternar entre as janelas
         button_to_window_ocorrencias = QPushButton("Ocorrências")
