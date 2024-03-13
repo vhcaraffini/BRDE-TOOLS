@@ -55,7 +55,7 @@ def enviar_oficio_bagri():
 
         # Adicionando Anexo
         convenio_excel = df.loc[i, 'RAZÃO SOCIAL']
-        anexo = email.Attachments.Add(F'{CAMINHO_PDF}/Oficio de {convenio_excel}.pdf')
+        email.Attachments.Add(F'{CAMINHO_PDF}/Oficio de {convenio_excel}.pdf')
 
         # email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
