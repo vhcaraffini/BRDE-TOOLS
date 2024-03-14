@@ -26,7 +26,6 @@ class MainWindow(QMainWindow):
             QMainWindow {
                 background-color: #F5F5DC;
                 border: 0 5px 5px 5px solid back;
-                
             }
             QPushButton {
                 background-color: #007553;
@@ -39,6 +38,9 @@ class MainWindow(QMainWindow):
                 height: 40px;
                 font-family: Candara;
                 font-size: 17px;
+            }
+            QPushButton:hover {
+                background-color: #009688; /* Altere a cor quando passar o mouse */
             }
             # QLabel {
             #     color: #006400;
