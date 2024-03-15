@@ -7,7 +7,7 @@ from tkinter import filedialog
 def separa_termos():
     # CAMINHOS ARQUIVOS
     root = tk.Tk()
-    root.withdraw() # Esconde a janela principal
+    root.withdraw()
 
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     CAMINHO_ENTRADA_PDF = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do PDF", "*.pdf"), ("Todos os arquivos", "*.*")))
