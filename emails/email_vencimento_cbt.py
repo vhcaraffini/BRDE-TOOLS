@@ -3,7 +3,7 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
-def enviador_email_vencimento_cbt():
+def enviar_email_vencimento_cbt():
     # Caminhos
     root = tk.Tk()
     root.withdraw()
@@ -50,7 +50,7 @@ def enviador_email_vencimento_cbt():
         """
         email.HTMLBody = email.HTMLBody.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
-        email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
+        # email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
-        email.Send()    
+        # email.Send()    
