@@ -3,6 +3,17 @@ import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 
+def ponto_para_virgula(valor):
+    str_valor_rounded = str(round(valor, 2))
+    if '.' in str_valor_rounded:
+        novo_valor = ''
+        for n in str_valor_rounded:
+            if n == '.':
+                n = ','
+            novo_valor += n
+    return novo_valor
+
+
 def enviar_email_vencimento_cbt():
     # Caminhos
     root = tk.Tk()
@@ -40,9 +51,10 @@ def enviar_email_vencimento_cbt():
         email.HTMLBody = f"""
         <html>
         <body>
-        <p>Prezados, {mutuario_plan1}.</p>
-        <p> </p>
-        <p> </p>
+        <p>Prezados: {mutuario_plan1}.</p>
+        <p>Seguem os valores das parcelas atualizadas com a cotação das Operação AFD com o vencimento em {data_vencimento}.</p>
+        <p>Plano: {plano} Valor da parcela: R$ {ponto_para_virgula(valor_parcela)}</p>
+        <p>Informamos que o documento para pagamento da Operação AFD já está disponível no Internet Banking do BRDE.</p>
         <p>Atenciosamente,</p>
         <img src='cid:Assinatura.png'>
         </body>
@@ -50,7 +62,7 @@ def enviar_email_vencimento_cbt():
         """
         email.HTMLBody = email.HTMLBody.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
-        # email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
+        email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
-        # email.Send()    
+        email.Send()

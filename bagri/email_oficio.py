@@ -24,8 +24,8 @@ def enviar_oficio_bagri():
         # E-mails de Envio
         emails = df.loc[i, 'E-MAIL']
         emails_copia = df.loc[i, 'E-MAIL CÓPIA']
-        email.To = 'e.marcus.machado@brde.com.br' #emails
-        # email.CC = f'{emails_copia}'
+        email.To = emails
+        email.CC = f'{emails_copia}'
 
         # Informações para o corpo do email
         data_repasse = df.loc[i, 'REPASSE'].strftime("%d/%m/%Y")
@@ -57,7 +57,7 @@ def enviar_oficio_bagri():
         convenio_excel = df.loc[i, 'RAZÃO SOCIAL']
         email.Attachments.Add(F'{CAMINHO_PDF}/Oficio de {convenio_excel}.pdf')
 
-        # email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
+        email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
-        # email.Send()
+        email.Send()
