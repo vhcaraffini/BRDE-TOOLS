@@ -42,16 +42,13 @@ class MainWindow(QMainWindow):
             QPushButton:hover {
                 background-color: #009688; /* Altere a cor quando passar o mouse */
             }
-            # QLabel {
-            #     color: #006400;
-            #     width: 100px;
-            #     height: 50px;
-            #     margin: 0px 70px 0 70px;
-            #     padding: 0;
-            #     border: 2px 2px 2px 2px solid black;
-            #     font-family: Candara;
-            #     font-size: 29px;
-            # }
+            QLabel {
+                color: #007553;
+                width: 100px;
+                height: 50px;
+                font-family: Candara;
+                font-size: 40px;
+            }
         """)
 
 
@@ -91,7 +88,7 @@ class MainWindow(QMainWindow):
         button_to_window_bagri.clicked.connect(self.show_window3)
         layout_window_main.addWidget(button_to_window_bagri)
 
-        button_to_window_termos = QPushButton("Separador de Termos")
+        button_to_window_termos = QPushButton("Gerir Termos")
         button_to_window_termos.clicked.connect(self.show_window4)
         layout_window_main.addWidget(button_to_window_termos)
 
