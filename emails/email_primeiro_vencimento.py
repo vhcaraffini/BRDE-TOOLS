@@ -24,7 +24,7 @@ def enviar_email_primeiro_vencimento():
             if mutuario_plan1 == mutuario_plan2:
                 email_a_enviar = df2.loc[n, 'E-MAIL']
 
-        # email.To = email_a_enviar
+        email.To = email_a_enviar
 
         # Informações para o corpo do email
         plano = df1.loc[i, 'PLANO']
@@ -60,6 +60,5 @@ def enviar_email_primeiro_vencimento():
 
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
-        print('Funcionando')
         # Enviando E-mail
-        # email.Send()
+        email.Send()
