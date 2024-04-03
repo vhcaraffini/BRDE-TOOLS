@@ -7,7 +7,7 @@ from tkinter import filedialog
 from selenium import webdriver
 from time import sleep
 import tkinter as tk
-import openpyxl
+import pandas as pd
 
 TIMER = 1
 
@@ -25,72 +25,62 @@ def registrar_ocorrencia_da_data(data):
     root.withdraw() # Esconde a janela principal
 
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    workbook = openpyxl.load_workbook(CAMINHO_ARQUIVO)
-    sheet = workbook['Planilha1']
+    df = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='Planilha1')
 
-    # Valores
-    mutuarios = []
-    descricoes = []
-    nomes = []
-    cobranca = '13'
 
     # Pegando valores do excel e adicionando a lista
-    for row in sheet.iter_rows(values_only=True):
-        if dia_formatado == row[6]:
-            mutuarios.append(row[0])
-            descricoes.append(row[5])
-            nomes.append(row[7])
+    for i, mutuario in enumerate(df['MUTUÁRIO']):
+        cobranca = '13'
+        if dia_formatado == df.loc[i, 'DATA']:
+            # Valores
+            descricao = df.loc[i, 'OBSERVAÇÃO']
+            nome = df.loc[i, 'NOME']
 
-    for n in range(len(mutuarios)):
-        mutuario = mutuarios[n]
-        descricao = descricoes[n]
-        nome = nomes[n]
+            # Nome do mutuario
+            print(mutuario)
 
-        # Nome do mutuario
-        print(mutuario)
+            # Acessando o site
+            driver = webdriver.Chrome()
+            driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
 
-        # Acessando o site
-        driver = webdriver.Chrome()
-        driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
+            # Encontrando e preenchendo barra de pesquisa
+            sleep(TIMER)
+            encontrando_barra_pesquisa = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'NomeCnpjCpf')))
+            encontrando_barra_pesquisa.send_keys(mutuario)
+            encontrando_barra_pesquisa.send_keys(Keys.ENTER)
+            sleep(TIMER)
 
-        # Encontrando e preenchendo barra de pesquisa
-        sleep(TIMER)
-        encontrando_barra_pesquisa = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'NomeCnpjCpf')))
-        encontrando_barra_pesquisa.send_keys(mutuario)
-        encontrando_barra_pesquisa.send_keys(Keys.ENTER)
-        sleep(TIMER)
+            # Entrando nas "Ocorrência"
+            entrando_ocorrencias = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/table/tbody/tr/td[6]/a/span')
+            entrando_ocorrencias.click()
+            sleep(TIMER)
 
-        # Entrando nas "Ocorrência"
-        entrando_ocorrencias = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/table/tbody/tr/td[6]/a/span')
-        entrando_ocorrencias.click()
-        sleep(TIMER)
+            # Entrando em "Incluir Ocorrência"
+            entrando_incluir = driver.find_element(By.ID, 'addOcorrenciaBtn')
+            entrando_incluir.send_keys(Keys.ENTER)
+            sleep(TIMER)
 
-        # Entrando em "Incluir Ocorrência"
-        entrando_incluir = driver.find_element(By.ID, 'addOcorrenciaBtn')
-        entrando_incluir.send_keys(Keys.ENTER)
-        sleep(TIMER)
+            # Seleciona assunto e preenche "13 - Cobrança"
+            preenchendo_assunto_1 = driver.find_element(By.ID, 'select2-AssuntoOcorrenciaId-container')
+            preenchendo_assunto_1.click()
+            preenchendo_assunto_2 = driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
+            preenchendo_assunto_2.send_keys(cobranca)
+            preenchendo_assunto_2.send_keys(Keys.ENTER)
+            sleep(TIMER)
 
-        # Seleciona assunto e preenche "13 - Cobrança"
-        preenchendo_assunto_1 = driver.find_element(By.ID, 'select2-AssuntoOcorrenciaId-container')
-        preenchendo_assunto_1.click()
-        preenchendo_assunto_2 = driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
-        preenchendo_assunto_2.send_keys(cobranca)
-        preenchendo_assunto_2.send_keys(Keys.ENTER)
-        sleep(TIMER)
+            # Inserindo data
+            inserindo_data = driver.find_element(By.ID, 'Data')
+            inserindo_data.clear()
+            sleep(TIMER)
+            inserindo_data.send_keys(str(dia_formatado_preencher))
 
-        # Inserindo data
-        inserindo_data = driver.find_element(By.ID, 'Data')
-        inserindo_data.clear()
-        sleep(TIMER)
-        inserindo_data.send_keys(str(dia_formatado_preencher))
+            # Inserindo "Descrição"
+            inserindo_descricao = driver.find_element(By.NAME, 'Descricao')
+            inserindo_descricao.send_keys(f'{nome}: {descricao}')
+            sleep(TIMER)
 
-        # Inserindo "Descrição"
-        inserindo_descricao = driver.find_element(By.NAME, 'Descricao')
-        inserindo_descricao.send_keys(f'{nome}: {descricao}')
-        sleep(TIMER)
-
-        # Encontra o "Incluir Ocorrência"
-        incluindo = driver.find_element(By.ID, 'createBtn')
-        incluindo.send_keys(Keys.ENTER)
-        sleep(TIMER)
-        driver.quit()
+            # Encontra o "Incluir Ocorrência"
+            incluindo = driver.find_element(By.ID, 'createBtn')
+            incluindo.send_keys(Keys.ENTER)
+            sleep(TIMER)
+            driver.quit()
