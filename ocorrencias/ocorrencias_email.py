@@ -2,11 +2,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium import webdriver
 from tkinter import filedialog
+from selenium import webdriver
 from time import sleep
 import tkinter as tk
-import openpyxl
+import pandas as pd
 
 TIMER = 1
 
@@ -20,24 +20,16 @@ def registrar_ocorrencia_email(data):
     root.withdraw() # Esconde a janela principal
 
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    workbook = openpyxl.load_workbook(CAMINHO_ARQUIVO)
-    sheet = workbook['Planilha1']
+    df = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='Planilha1')
 
     # Valores
-    mutuarios = []
-    descricoes = []
-    cobranca = '13'
     mutuarios_anteriores = []
 
     # Pegando valores do excel e adicionando a lista
-    for row in sheet.iter_rows(values_only=True):
-        mutuarios.append(row[0])
-        descricoes.append(row[1])
-
-    for n in range(len(mutuarios)):
-        mutuario = mutuarios[n]
-        descricao = descricoes[n]
+    for i, mutuario in enumerate(df['MUTUÁRIO']):
         nome = 'Cris'
+        cobranca = '13'
+        descricao = df.loc[i, 'OBSERVAÇÃO']
 
         # Filtrando nomes iguais
         if mutuario in mutuarios_anteriores:
