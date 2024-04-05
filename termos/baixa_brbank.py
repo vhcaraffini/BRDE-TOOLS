@@ -53,10 +53,10 @@ def alterando_situacao_contrato():
         while str(contrato_site) != str(contrato):
             n += 1
             try:
-                encontrando_contrato = driver.find_element(By.XPATH, f'/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr/td[1]')
+                encontrando_contrato = driver.find_element(By.XPATH, f'/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr[{n}]/td[1]')
                 contrato_site = encontrando_contrato.text
             except:
-                encontrando_contrato = driver.find_element(By.XPATH, f'/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr[{n}]/td[1]')
+                encontrando_contrato = driver.find_element(By.XPATH, f'/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr/td[1]')
                 contrato_site = encontrando_contrato.text
 
             print(contrato_site)
@@ -95,19 +95,15 @@ def alterando_situacao_contrato():
         # Preenche data do termo
         try:
             preenche_data_termo = driver.find_element(By.XPATH, '/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr/td[7]/input')
-            preenche_data_termo.send_keys(data_termo)
+            preenche_data_termo.send_keys(data_termo.strftime('%d%m%Y'))
         except:
             preenche_data_termo = driver.find_element(By.XPATH, f'/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr[{n}]/td[7]/input')
-            preenche_data_termo.send_keys(data_termo)
+            preenche_data_termo.send_keys(data_termo.strftime('%d%m%Y'))
         sleep(TIMER)
 
         # Encontra o Salvar
-        # ending = driver.find_element(By.XPATH, '/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr/td[9]/div/a[2]/span')
-        # ending.click()
-
-        # # Salva
-        # atualizar = driver.find_element(By.XPATH, 'select2-SituacaoId-container') 
-        # atualizar.send_keys(Keys.ENTER)
-        # sleep(3)
+        ending = driver.find_element(By.XPATH, '/html/body/div/div/div/div/form/fieldset/section[2]/div/table/tbody/tr/td[9]/div/a[2]/span')
+        ending.click()
+        sleep(TIMER)
 
         driver.quit()
