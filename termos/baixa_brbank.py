@@ -1,10 +1,10 @@
-from selenium import webdriver
-from time import sleep
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
-import tkinter as tk
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium import webdriver
 from tkinter import filedialog
+from time import sleep
+import tkinter as tk
 import pandas as pd
 
 TIMER = 0.75
