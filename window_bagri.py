@@ -8,7 +8,7 @@ class window_oficio_bagri(QWidget):
 
         self.layout = QVBoxLayout(self)
 
-        self.label_oficios = QLabel("Gerador de Oficios para o Banco do Agricultor")
+        self.label_oficios = QLabel("Oficios para o Banco do Agricultor")
         self.layout.addWidget(self.label_oficios)
 
         # Conectando o sinal clicked do botão a um método da própria classe
