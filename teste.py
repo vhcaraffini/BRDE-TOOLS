@@ -1,13 +1,12 @@
-import os
+import datetime
+import locale
 
-def get_user_home_folder():
-    if os.name == 'posix':  # Verifica se é um sistema tipo Unix (Linux, macOS, etc.)
-        return os.getenv('HOME')
-    elif os.name == 'nt':  # Verifica se é um sistema Windows
-        return os.getenv('USERPROFILE')
-    else:
-        raise OSError('Sistema operacional não suportado')
+# Definir a localização para português do Brasil
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
-# Exemplo de uso
-user_home_folder = get_user_home_folder()
-print(f'A pasta do usuário é: {user_home_folder}')
+# Obter o nome do mês atual
+nome_mes_atual = datetime.datetime.now().strftime('%B')
+
+ano_atual = datetime.datetime.now().strftime('%Y')
+
+print(ano_atual)

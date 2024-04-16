@@ -5,18 +5,21 @@ import tkinter as tk
 from tkinter import filedialog
 
 def separa_termos():
-    # CAMINHOS ARQUIVOS
+    # Abre a caixa de selação de Arquivos
     root = tk.Tk()
     root.withdraw()
 
+    # CAMINHOS ARQUIVOS
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     CAMINHO_ENTRADA_PDF = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do PDF", "*.pdf"), ("Todos os arquivos", "*.*")))
 
     CAMINHO = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Documentos/Termos de Quitação/'
     CAMINHO_SAIDA_PDF = f'{CAMINHO}Gerados'
 
+    # Abre o Excel
     df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='Planilha1')
 
+    # Função que abre um PDF e separa em varias paginas de acordo com os nomes da planilha
     def pdf_para_paginas(entrada_do_arquivo, saida_da_pasta):
         with open(entrada_do_arquivo, 'rb') as arquivo:
             leitor_pdf = PyPDF2.PdfReader(arquivo)
