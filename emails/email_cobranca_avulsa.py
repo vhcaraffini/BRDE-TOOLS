@@ -11,6 +11,11 @@ locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 # Obter o nome do mês atual e o numero do ano
 nome_mes_atual = datetime.datetime.now().strftime('%B')
 ano_atual = datetime.datetime.now().strftime('%Y')
+mes_atual = datetime.datetime.now().month
+
+datas_habituais = [f'01/{mes_atual}/{ano_atual}', f'10/{mes_atual}/{ano_atual}', 
+                   f'15/{mes_atual}/{ano_atual}', f'18/{mes_atual}/{ano_atual}',
+                   f'23/{mes_atual}/{ano_atual}', f'20/{mes_atual}/{ano_atual}',]
 
 def ponto_para_virgula(valor):
     str_valor_rounded = str(round(valor, 2))
@@ -35,9 +40,13 @@ def enviar_email_vencimento_cbt():
 
     # Gerador
     for i, mutuario_plan1 in enumerate(df['Mutuário']):
-        # Definindo formato de envio
-        outlook = win32.Dispatch('outlook.application')
-        email = outlook.CreateItem(0)
+        # Informações para o corpo do email
+        plano = df.loc[i, 'Nº Plano']
+        data_vencimento = df.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
+        valor_parcela = df.loc[i, 'Valor Prestação R$']
+
+        if data_vencimento in datas_habituais:
+            continue
 
         # E-mails de Envio
         for n, mutuario_plan2 in enumerate(df['MUTUARIO']):
@@ -46,10 +55,9 @@ def enviar_email_vencimento_cbt():
 
         email.To = email_a_enviar
 
-        # Informações para o corpo do email
-        plano = df.loc[i, 'Nº Plano']
-        data_vencimento = df.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
-        valor_parcela = df.loc[i, 'Valor Prestação R$']
+        # Definindo formato de envio
+        outlook = win32.Dispatch('outlook.application')
+        email = outlook.CreateItem(0)
 
         # Assunto do e-mail
         email.Subject = f'VENCIMENTO {mutuario_plan1} {data_vencimento}'
