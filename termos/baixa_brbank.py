@@ -17,10 +17,10 @@ def alterando_situacao_contrato():
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     df = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='Planilha1')
 
-    for i, contrato in enumerate(df['Contrato']):
+    for i, contrato in enumerate(df['CONTRATO']):
         cgc = str(df.loc[i, 'CPF/CNPJ'])
-        numero_termo = str(df.loc[i, 'nrTQ'])
-        data_termo = df.loc[i, 'dtTQ']
+        numero_termo = str(df.loc[i, 'NR_TERMO_QUITACAO'])
+        data_termo = df.loc[i, 'DT_QUITACAO']
 
         # Acessando o site
         driver = webdriver.Chrome()
