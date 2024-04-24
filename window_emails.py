@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QVBoxLayout, QWidget, QLabel, QPushButton
 from emails.email_primeiro_vencimento import enviar_email_primeiro_vencimento
-from emails.email_vencimento_cbt import enviar_email_vencimento_cbt
+from emails.email_vencimento_cbt import enviar_email_vencimento_cba
+from emails.email_cobranca_avulsa import enviar_email_cobranca_avulsa
 
 class window_email(QWidget):
     def __init__(self, main_window):
@@ -12,13 +13,17 @@ class window_email(QWidget):
         self.layout.addWidget(self.label_oficios)
 
         # Conectando o sinal clicked do botão a um método da própria classe
-        self.emai_primeiro_vencimento = QPushButton("Enviar E-mail Primeiro Vencimento")
-        self.emai_primeiro_vencimento.clicked.connect(self.enviar_email_primeiro_vencimento_function)
-        self.layout.addWidget(self.emai_primeiro_vencimento)
+        self.email_primeiro_vencimento = QPushButton("Enviar E-mail Primeiro Vencimento")
+        self.email_primeiro_vencimento.clicked.connect(self.enviador_email_primeiro_vencimento)
+        self.layout.addWidget(self.email_primeiro_vencimento)
 
-        self.emai_vencimento_cbt = QPushButton("Enviar E-mail Parcela CBT")
-        self.emai_vencimento_cbt.clicked.connect(self.enviador_mail_vencimento_cbt)
-        self.layout.addWidget(self.emai_vencimento_cbt)
+        self.email_vencimento_cba = QPushButton("Enviar E-mail Parcela CBA")
+        self.email_vencimento_cba.clicked.connect(self.enviador_mail_vencimento_cba)
+        self.layout.addWidget(self.email_vencimento_cba)
+
+        self.email_cobranca_avulsa = QPushButton("Enviar E-mail Cobrança Avulsa")
+        self.email_cobranca_avulsa.clicked.connect(self.enviador_mail_cobranca_avulsa)
+        self.layout.addWidget(self.email_cobranca_avulsa)
 
         self.layout.addWidget(QPushButton("Voltar", clicked=self.return_main_window))
 
@@ -27,8 +32,11 @@ class window_email(QWidget):
     def return_main_window(self):
         self.main_window.return_main_window()
 
-    def enviar_email_primeiro_vencimento_function(self):
+    def enviador_email_primeiro_vencimento(self):
         enviar_email_primeiro_vencimento()
 
-    def enviador_mail_vencimento_cbt(self):
-        enviar_email_vencimento_cbt()
+    def enviador_mail_vencimento_cba(self):
+        enviar_email_vencimento_cba()
+
+    def enviador_mail_cobranca_avulsa(self):
+        enviar_email_cobranca_avulsa()
