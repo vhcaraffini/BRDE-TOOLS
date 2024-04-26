@@ -44,8 +44,8 @@ def alterando_situacao_contrato():
         bolinha_de_seleção.click()
 
         # Dando Ok
-        dand_ok = driver.find_element(By.ID, 'addBtn')
-        dand_ok.click()
+        dando_ok = driver.find_element(By.ID, 'addBtn')
+        dando_ok.click()
         sleep(TIMER)
 
         n = 0
