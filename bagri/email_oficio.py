@@ -42,8 +42,6 @@ def enviar_oficio_bagri():
         <p>Prezados:</p>
         <p>Segue em anexo comunicado referente ao repasse da equalização de operações Banco do Agricultor referente as parcelas com vencimento em {data_vencimento}.</p>
         <p> </p>
-        <p>A equalização referente as parcelas de 15/12/2023 foi repassada ao BRDE em 15/02/2024.</p>
-        <p> </p>
         <p>O BRDE realizou o repasse diretamente na C/C dos mutuários no dia {data_repasse}.</p>
         <p> </p>
         <p>Atenciosamente,</p>
