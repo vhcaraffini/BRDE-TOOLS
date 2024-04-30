@@ -1,11 +1,17 @@
+from functions_for_windows import get_user_home_folder
 import win32com.client as win32
+from tkinter import filedialog
+import tkinter as tk
 import pandas as pd
 
 def enviar_oficio_bagri():
     # Caminhos
-    CAMINHO_EXCEL = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Documentos/OFICIO/OFICIO.xlsx'
+    root = tk.Tk()
+    root.withdraw()
+
+    CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))    
     CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
-    CAMINHO_PDF = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Documentos/OFICIO/Oficios'
+    GET_PATH = get_user_home_folder()
 
     # Abrindo abas do Excel
     df = pd.read_excel(CAMINHO_EXCEL, sheet_name='RESUMO')
@@ -29,7 +35,7 @@ def enviar_oficio_bagri():
 
         # Informações para o corpo do email
         data_repasse = df.loc[i, 'REPASSE'].strftime("%d/%m/%Y")
-        data_vencimento = df.loc[i, 'REPASSE'].strftime("%d/%m/%Y")
+        data_vencimento = df.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
 
         # Assunto
         email.Subject = f'{cooperativa_mutuario} - REPASSE BANCO DO AGRICULTOR - PARCELA {data_vencimento}'
@@ -39,6 +45,8 @@ def enviar_oficio_bagri():
         email.HTMLBody = f"""
         <html>
         <body>
+        <p>Retificando. Favor desconsiderar o email anterior.</p>
+        <p> </p>
         <p>Prezados:</p>
         <p>Segue em anexo comunicado referente ao repasse da equalização de operações Banco do Agricultor referente as parcelas com vencimento em {data_vencimento}.</p>
         <p> </p>
@@ -53,7 +61,7 @@ def enviar_oficio_bagri():
 
         # Adicionando Anexo
         convenio_excel = df.loc[i, 'RAZÃO SOCIAL']
-        email.Attachments.Add(F'{CAMINHO_PDF}/Oficio de {convenio_excel}.pdf')
+        email.Attachments.Add(F'{GET_PATH}/Documentos/Oficios/Oficio de {convenio_excel}.pdf')
 
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
