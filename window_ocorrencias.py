@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QVBoxLayout, QWidget, QLabel, QPushButton, QCalendarWidget
+from PySide6.QtWidgets import QVBoxLayout, QWidget, QLabel, QPushButton, QCalendarWidget, QHBoxLayout, QBoxLayout
 from ocorrencias.ocorrencias_email import registrar_ocorrencia_email
 from ocorrencias.ocorrencias import registrar_ocorrencia_da_data
 
@@ -8,18 +8,29 @@ class Window_ocorrencias(QWidget):
 
         self.layout = QVBoxLayout(self)
 
+        # Criando um QHBoxLayout
+        layout_horizontal = QHBoxLayout()
+
         # Criando botão ocorrencia
-        self.label_ocorrencias = QLabel("Ocorrências")
-        self.layout.addWidget(self.label_ocorrencias)
+        self.label_ocorrencias = QLabel("\n\n\n          Ocorrências")
+        layout_horizontal.addWidget(self.label_ocorrencias)
 
         # Adicionando QCalendarWidget para selecionar a data
         self.calendar_widget = QCalendarWidget()
         self.calendar_widget.setMaximumHeight(100)
-        self.calendar_widget.setMinimumHeight(200)
-        self.calendar_widget.setMaximumWidth(200)
+        self.calendar_widget.setMinimumHeight(250)
+        self.calendar_widget.setMaximumWidth(300)
         self.calendar_widget.setMinimumWidth(100)
-        self.layout.addWidget(self.calendar_widget)
+        
+        # Adicionando o QCalendarWidget ao QHBoxLayout
+        layout_horizontal.addWidget(self.calendar_widget)
 
+        # Adicionando o QHBoxLayout ao QVBoxLayout
+        self.layout.addLayout(layout_horizontal)
+
+        self.label_espacos = QLabel("")
+        self.layout.addWidget(self.label_espacos)
+    
         # Conectar o sinal clicked do botão à função para registrar a ocorrência do referente dia
         registrar_botao_dia = QPushButton("Registrar Ocorrência do referente dia")
         registrar_botao_dia.clicked.connect(self.enviar_data_de_registramento_ocorrencia)
@@ -33,6 +44,7 @@ class Window_ocorrencias(QWidget):
         self.layout.addWidget(QPushButton("Voltar", clicked=self.return_main_window))
 
         self.main_window = main_window
+
 
     # Função que retorna a janela Principal
     def return_main_window(self):
