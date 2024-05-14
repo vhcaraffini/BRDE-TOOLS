@@ -6,6 +6,7 @@ class Window_ocorrencias(QWidget):
     def __init__(self, main_window):
         super().__init__()
 
+        # Criando um QVBoxLayout
         self.layout = QVBoxLayout(self)
 
         # Criando um QHBoxLayout
@@ -17,6 +18,16 @@ class Window_ocorrencias(QWidget):
 
         # Adicionando QCalendarWidget para selecionar a data
         self.calendar_widget = QCalendarWidget()
+        self.calendar_widget.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+        self.calendar_widget.setStyleSheet("""
+            QCalendarWidget QToolButton {
+            background-color: #1e90ff;
+            color: green;
+        }
+            QCalendarWidget QToolButton:hover {
+            background-color: #4682b4;
+        }
+        """)
         self.calendar_widget.setMaximumHeight(100)
         self.calendar_widget.setMinimumHeight(250)
         self.calendar_widget.setMaximumWidth(300)

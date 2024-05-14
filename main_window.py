@@ -4,6 +4,7 @@ from window_bagri import window_oficio_bagri
 from PySide6.QtGui import QPixmap, QIcon
 from window_termos import window_termos
 from window_emails import window_email
+from window_posicao import window_posicao
 import os
 
 diretorio_atual = os.getcwd()
@@ -96,6 +97,10 @@ class MainWindow(QMainWindow):
         button_to_window_emails.clicked.connect(self.show_window5)
         layout_window_main.addWidget(button_to_window_emails)
 
+        button_to_window_posicao = QPushButton("Gerador Posição Fim do Mês")
+        button_to_window_posicao.clicked.connect(self.show_window6)
+        layout_window_main.addWidget(button_to_window_posicao)
+
         self.stacked_widget.addWidget(self.window_BRDE_TOOLS)
 
         # Janelas específicas
@@ -111,6 +116,9 @@ class MainWindow(QMainWindow):
         self.window_emails = window_email(self)
         self.stacked_widget.addWidget(self.window_emails)
 
+        self.window_posicao = window_posicao(self)
+        self.stacked_widget.addWidget(self.window_posicao)
+
     def return_main_window(self):
         self.stacked_widget.setCurrentIndex(0)
 
@@ -125,3 +133,6 @@ class MainWindow(QMainWindow):
 
     def show_window5(self):
         self.stacked_widget.setCurrentIndex(4)
+
+    def show_window6(self):
+        self.stacked_widget.setCurrentIndex(5)
