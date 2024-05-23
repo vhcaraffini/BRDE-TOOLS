@@ -44,43 +44,36 @@ def registrar_ocorrencia_da_data(data):
             driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
 
             # Encontrando e preenchendo barra de pesquisa
-            sleep(TIMER)
             encontrando_barra_pesquisa = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'NomeCnpjCpf')))
             encontrando_barra_pesquisa.send_keys(mutuario)
             encontrando_barra_pesquisa.send_keys(Keys.ENTER)
-            sleep(TIMER)
 
             # Entrando nas "Ocorrência"
-            entrando_ocorrencias = driver.find_element(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/table/tbody/tr/td[6]/a/span')
+            entrando_ocorrencias = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div/div[1]/div[3]/table/tbody/tr/td[6]/a/span')))
             entrando_ocorrencias.click()
-            sleep(TIMER)
 
             # Entrando em "Incluir Ocorrência"
-            entrando_incluir = driver.find_element(By.ID, 'addOcorrenciaBtn')
+            entrando_incluir = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'addOcorrenciaBtn')))
             entrando_incluir.send_keys(Keys.ENTER)
-            sleep(TIMER)
 
             # Seleciona assunto e preenche "13 - Cobrança"
-            preenchendo_assunto_1 = driver.find_element(By.ID, 'select2-AssuntoOcorrenciaId-container')
+            preenchendo_assunto_1 = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'select2-AssuntoOcorrenciaId-container')))
             preenchendo_assunto_1.click()
-            preenchendo_assunto_2 = driver.find_element(By.XPATH, '/html/body/span/span/span[1]/input')
+            preenchendo_assunto_2 = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.XPATH, '/html/body/span/span/span[1]/input')))
             preenchendo_assunto_2.send_keys(cobranca)
             preenchendo_assunto_2.send_keys(Keys.ENTER)
-            sleep(TIMER)
 
             # Inserindo data
-            inserindo_data = driver.find_element(By.ID, 'Data')
+            inserindo_data = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'Data')))
             inserindo_data.clear()
-            sleep(TIMER)
             inserindo_data.send_keys(str(dia_formatado_preencher))
 
             # Inserindo "Descrição"
-            inserindo_descricao = driver.find_element(By.NAME, 'Descricao')
+            inserindo_descricao = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.NAME, 'Descricao')))
             inserindo_descricao.send_keys(f'{nome}: {descricao}')
-            sleep(TIMER)
 
             # Encontra o "Incluir Ocorrência"
-            incluindo = driver.find_element(By.ID, 'createBtn')
+            incluindo = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'createBtn')))
             incluindo.send_keys(Keys.ENTER)
-            sleep(TIMER)
+
             driver.quit()
