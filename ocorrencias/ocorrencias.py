@@ -9,7 +9,7 @@ from time import sleep
 import tkinter as tk
 import pandas as pd
 
-TIMER = 0.5
+TIMER = 15
 
 def registrar_ocorrencia_da_data(data):
     # Dia de ontem
