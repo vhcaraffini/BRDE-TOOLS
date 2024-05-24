@@ -5,7 +5,6 @@ from selenium.webdriver.common.by import By
 from datetime import datetime
 from tkinter import filedialog
 from selenium import webdriver
-from time import sleep
 import tkinter as tk
 import pandas as pd
 

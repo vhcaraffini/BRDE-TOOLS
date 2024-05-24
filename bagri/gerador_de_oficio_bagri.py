@@ -37,6 +37,7 @@ def gerar_oficio_bagri():
     datas_repasse = []
     data_manuscrita_hoje = data_manuscrita(datetime.now() + timedelta(1))
     convenios_resumo = []
+    nomes_mutuarios = []
 
     # Pegando valores do excel e adicionando a lista RESUMO
     for row in sheet_1.iter_rows(values_only=True):
@@ -44,9 +45,10 @@ def gerar_oficio_bagri():
         datas_pagamento.append(row[1])
         datas_vencimento.append(row[2])
         datas_repasse.append(row[3])
+        convenios_resumo.append(row[4])
         clientes.append(row[6])
         cnpjs_cpfs.append(row[7])
-        convenios_resumo.append(row[4])
+        nomes_mutuarios.append(row[9])
 
     # PLANILHA 2 (REPASSES)
     # Lista de informações REPASSES
@@ -78,6 +80,7 @@ def gerar_oficio_bagri():
             data_vencimento = datas_vencimento[n].strftime("%d/%m/%Y")
             data_repasse = datas_repasse[n].strftime("%d/%m/%Y")
             convenio = convenios_resumo[n]
+            nome_mutuario = nomes_mutuarios[n]
         
         if convenio not in convenios_repasse:
             continue
@@ -124,13 +127,13 @@ def gerar_oficio_bagri():
 
         # Adiciona um parágrafo justificado ao PDF
         paragrafos = [
-            Paragraph("De:", estilo_justificado),
-            Paragraph(f"BRDE/AGCUR/GEARC/SECOB                            Nº {memorando}", estilo_justificado),
-            Paragraph("Para:", estilo_justificado),
-            Paragraph(f"{cliente}", estilo_justificado),
-            Paragraph(f"CNPJ/MF Nº {cnpj_cpf}", estilo_justificado),
+            Paragraph(f"Oficio BRDE/AGCUR Nº {memorando}"),
+            Paragraph(f"", estilo_a_direita),        
+            Paragraph(f"<b>De:</b><br/>BRDE/AGCUR/GEARC/SECOB"),
+            Paragraph(f"", estilo_a_direita),        
+            Paragraph(f"<b>Para:</b><br/>{cliente}<br/>CNPJ/MF Nº {cnpj_cpf}"),
             Paragraph(f"", estilo_a_direita),
-            Paragraph("Ref.: Reembolso Equalização Programa Banco do Agricultor", estilo_justificado),
+            Paragraph("<b>Ref.: Reembolso Equalização Programa Banco do Agricultor</b>", estilo_justificado),
             Paragraph(f"", estilo_a_direita),        
             Paragraph("Prezados Senhores:", estilo_justificado),
             Paragraph(f"""Em {data_pagamento} foram pagas por essa Cooperativa parcelas de operações contratadas no âmbito 
@@ -143,6 +146,7 @@ def gerar_oficio_bagri():
             Paragraph("Colocamo-nos à disposição para quaisquer esclarecimentos.", estilo_justificado),
             Paragraph(f"", estilo_a_direita),
             Paragraph(f"Curitiba/PR, {data_manuscrita_hoje}.", estilo_a_direita),
+            Paragraph(f"", estilo_a_direita),
             Paragraph(f"", estilo_a_direita),
             Paragraph(f"", estilo_a_direita),
             Paragraph(f"", estilo_a_direita),
