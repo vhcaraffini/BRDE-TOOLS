@@ -8,7 +8,7 @@ from selenium import webdriver
 import tkinter as tk
 import pandas as pd
 
-TIMER = 15
+TIMER = 10
 
 def registrar_ocorrencia_da_data(data):
     # Dia de ontem
