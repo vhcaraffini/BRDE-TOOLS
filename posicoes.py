@@ -6,7 +6,7 @@ import openpyxl
 def data_planilha(CAMINHO_ARQUIVO):
     data = ''
     for n in range(10):
-        data = CAMINHO_ARQUIVO[-1-n] + data
+        data = CAMINHO_ARQUIVO[-6-n] + data
     return data
 
 
@@ -17,7 +17,7 @@ def posicao_coperativas_credicopavel():
 
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     df = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='Planilha1')
-    CAMINHO_NOVO = F'M:/Secob/POSIÇÃO FINAL MÊS/CREDICOOPAVEL - POSIÇÃO {data_planilha(CAMINHO_ARQUIVO)}'
+    CAMINHO_NOVO = F'M:/Secob/POSIÇÃO FINAL MÊS/CREDICOOPAVEL - POSIÇÃO {data_planilha(CAMINHO_ARQUIVO)} teste.xlsx'
 
     filtro = df['CodInt'] = 1007 & df['CodInt'].notna()
     colunas_desejadas = ['Mutuario', 'CGC', 'PLANO', 'Vencimento Mais Antigo', 'NR', 'Saldo Vencido', 'Saldo Total', 'CodInt', 'CodCoop']
