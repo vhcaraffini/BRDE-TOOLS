@@ -15,7 +15,7 @@ TIMER = 10
 def tarifa_de_cadastro():
 
     root = tk.Tk()
-    root.withdraw() # Esconde a janela principal
+    root.withdraw()
 
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     df = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='Planilha1')
