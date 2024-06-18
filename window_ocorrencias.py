@@ -13,7 +13,7 @@ class Window_ocorrencias(QWidget):
         layout_horizontal = QHBoxLayout()
 
         # Criando botão ocorrencia
-        self.label_ocorrencias = QLabel("\n\n\n          Ocorrências")
+        self.label_ocorrencias = QLabel("\n\n\nOcorrências")
         layout_horizontal.addWidget(self.label_ocorrencias)
 
         # Adicionando QCalendarWidget para selecionar a data
