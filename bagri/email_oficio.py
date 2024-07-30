@@ -45,8 +45,6 @@ def enviar_oficio_bagri():
         email.HTMLBody = f"""
         <html>
         <body>
-        <p>Retificando. Favor desconsiderar o email anterior.</p>
-        <p> </p>
         <p>Prezados:</p>
         <p>Segue em anexo comunicado referente ao repasse da equalização de operações Banco do Agricultor referente as parcelas com vencimento em {data_vencimento}.</p>
         <p> </p>

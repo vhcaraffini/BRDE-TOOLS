@@ -3,7 +3,7 @@ from bagri.funcoes import data_manuscrita, transforma_ponto_em_virgula, configur
 from functions_for_windows import get_user_home_folder, create_folder
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus.frames import Frame
-from datetime import datetime, timedelta
+from datetime import datetime
 from reportlab.lib import pagesizes
 from reportlab.lib.units import cm
 from tkinter import filedialog
@@ -24,8 +24,8 @@ def gerar_oficio_bagri():
 
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     workbook = openpyxl.load_workbook(CAMINHO_ARQUIVO)
-    sheet_1 = workbook['RESUMO']
-    sheet_2 = workbook['REPASSES']
+    sheet_RESUMO = workbook['RESUMO']
+    sheet_REPASSES = workbook['REPASSES']
 
     # PLANILHA 1 (RESUMO)
     # Lista de informações RESUMO
@@ -35,12 +35,12 @@ def gerar_oficio_bagri():
     datas_pagamento = []
     datas_vencimento = []
     datas_repasse = []
-    data_manuscrita_hoje = data_manuscrita(datetime.now() + timedelta(1))
+    data_manuscrita_hoje = data_manuscrita(datetime.now())
     convenios_resumo = []
     nomes_mutuarios = []
 
     # Pegando valores do excel e adicionando a lista RESUMO
-    for row in sheet_1.iter_rows(values_only=True):
+    for row in sheet_RESUMO.iter_rows(values_only=True):
         memorandos.append(row[0])
         datas_pagamento.append(row[1])
         datas_vencimento.append(row[2])
@@ -59,7 +59,7 @@ def gerar_oficio_bagri():
     convenios_repasse = []
 
     # Pegando valores do excel e adicionando a lista REPASSES
-    for row in sheet_2.iter_rows(values_only=True):
+    for row in sheet_REPASSES.iter_rows(values_only=True):
         cpfs.append(row[0])
         mutuarios.append(row[1])
         repasses.append(row[2])
