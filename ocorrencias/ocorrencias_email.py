@@ -7,7 +7,7 @@ from selenium import webdriver
 import tkinter as tk
 import pandas as pd
 
-TIMER = 15
+TIMER = 120
 
 
 def registrar_ocorrencia_email(data):
@@ -23,6 +23,10 @@ def registrar_ocorrencia_email(data):
 
     # Valores
     mutuarios_anteriores = []
+
+    # Logando
+    driver = webdriver.Chrome()
+    driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
 
     # Pegando valores do excel e adicionando a lista
     for i, mutuario in enumerate(df['MUTUÁRIO']):
@@ -43,6 +47,7 @@ def registrar_ocorrencia_email(data):
 
         # Encontrando e preenchendo barra de pesquisa
         encontrando_barra_pesquisa = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'NomeCnpjCpf')))
+        encontrando_barra_pesquisa.clear()
         encontrando_barra_pesquisa.send_keys(mutuario)
         encontrando_barra_pesquisa.send_keys(Keys.ENTER)
 
@@ -73,5 +78,8 @@ def registrar_ocorrencia_email(data):
         # Encontra o "Incluir Ocorrência"
         incluindo = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'createBtn')))
         incluindo.send_keys(Keys.ENTER)
-        driver.quit()
+        
+        # Finalizando
+        finalizando = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.XPATH, '//*[@id="pagination"]/ul/li[3]/a')))
+        finalizando.click()
         mutuarios_anteriores.append(mutuario)

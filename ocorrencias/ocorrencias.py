@@ -8,7 +8,7 @@ from selenium import webdriver
 import tkinter as tk
 import pandas as pd
 
-TIMER = 10
+TIMER = 120
 
 def registrar_ocorrencia_da_data(data):
     # Dia de ontem
@@ -21,11 +21,15 @@ def registrar_ocorrencia_da_data(data):
 
     # Abrindo Excel
     root = tk.Tk()
-    root.withdraw() # Esconde a janela principal
+    root.withdraw()
 
+    # Caminho Excel e nome planilha
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
     df = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='Planilha1')
 
+    # Logando
+    driver = webdriver.Chrome()
+    driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
 
     # Pegando valores do excel e adicionando a lista
     for i, mutuario in enumerate(df['MUTUÁRIO']):
@@ -39,11 +43,11 @@ def registrar_ocorrencia_da_data(data):
             print(mutuario)
 
             # Acessando o site
-            driver = webdriver.Chrome()
             driver.get(f"https://brbank.brde.com.br/Pessoas/Buscar")
 
             # Encontrando e preenchendo barra de pesquisa
             encontrando_barra_pesquisa = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'NomeCnpjCpf')))
+            encontrando_barra_pesquisa.clear()
             encontrando_barra_pesquisa.send_keys(mutuario)
             encontrando_barra_pesquisa.send_keys(Keys.ENTER)
 
@@ -75,4 +79,5 @@ def registrar_ocorrencia_da_data(data):
             incluindo = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.ID, 'createBtn')))
             incluindo.send_keys(Keys.ENTER)
 
-            driver.quit()
+            finalizando = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.XPATH, '//*[@id="pagination"]/ul/li[3]/a')))
+            finalizando.click()
