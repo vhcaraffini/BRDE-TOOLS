@@ -22,26 +22,26 @@ def enviar_email_vencimento_cba():
     CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
 
     # Abrindo aba do Excel
-    df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='Info_Mutuario')
+    df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='Operações Ativas')
     df2 = pd.read_excel(CAMINHO_EXCEL, sheet_name='Mailing')
 
     # Gerador
-    for i, mutuario_plan1 in enumerate(df1['MUTUARIO']):
+    for i, mutuario_plan1 in enumerate(df1['Mutuário']):
         # Definindo formato de envio
         outlook = win32.Dispatch('outlook.application')
         email = outlook.CreateItem(0)
 
         # E-mails de Envio
-        for n, mutuario_plan2 in enumerate(df2['MUTUARIO']):
+        for n, mutuario_plan2 in enumerate(df2['MUTUARIOS']):
             if mutuario_plan1 == mutuario_plan2:
                 email_a_enviar = df2.loc[n, 'E-MAIL']
 
         email.To = email_a_enviar
 
         # Informações para o corpo do email
-        plano = df1.loc[i, 'PLANO']
-        data_vencimento = df1.loc[i, 'DATA_VENCIMENTO'].strftime("%d/%m/%Y")
-        valor_parcela = df1.loc[i, 'VALOR_PARCELA']
+        plano = df1.loc[i, 'Plano']
+        data_vencimento = df1.loc[i, 'Vencimento'].strftime("%d/%m/%Y")
+        valor_parcela = df1.loc[i, 'Total em R$']
 
         # Assunto do e-mail
         email.Subject = f'VENCIMENTO {mutuario_plan1} {data_vencimento}'
@@ -52,9 +52,9 @@ def enviar_email_vencimento_cba():
         <html>
         <body>
         <p>Prezados: {mutuario_plan1}.</p>
-        <p>Seguem os valores das parcelas atualizadas com a cotação das Operação AFD com o vencimento em {data_vencimento}.</p>
-        <p>Plano: {plano} Valor da parcela: R$ {ponto_para_virgula(valor_parcela)}</p>
-        <p>Informamos que o documento para pagamento da Operação AFD já está disponível no Internet Banking do BRDE.</p>
+        <p>Seguem os valores das parcelas atualizadas com a cotação das Operação NDB com o vencimento em {data_vencimento}.</p>
+        <p>Plano: {int(plano)} Valor da parcela: R$ {ponto_para_virgula(valor_parcela)}</p>
+        <p>Informamos que o documento para pagamento da Operação NDB estará disponível amanhã no Internet Banking do BRDE.</p>
         <p>Atenciosamente,</p>
         <img src='cid:Assinatura.png'>
         </body>

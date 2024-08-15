@@ -9,7 +9,7 @@ from reportlab.lib.units import cm
 from tkinter import filedialog
 from functools import partial
 import tkinter as tk
-import openpyxl
+import pandas as pd
 
 
 def gerar_oficio_bagri():
@@ -23,83 +23,44 @@ def gerar_oficio_bagri():
     root.withdraw()
 
     CAMINHO_ARQUIVO = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    workbook = openpyxl.load_workbook(CAMINHO_ARQUIVO)
-    sheet_RESUMO = workbook['RESUMO']
-    sheet_REPASSES = workbook['REPASSES']
+    df1 = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='RESUMO')
+    df2 = pd.read_excel(CAMINHO_ARQUIVO, sheet_name='REPASSES')
 
-    # PLANILHA 1 (RESUMO)
-    # Lista de informações RESUMO
-    memorandos = []
-    clientes = []
-    cnpjs_cpfs = []
-    datas_pagamento = []
-    datas_vencimento = []
-    datas_repasse = []
-    data_manuscrita_hoje = data_manuscrita(datetime.now())
-    convenios_resumo = []
-    nomes_mutuarios = []
+    # Gerando os arquivos baseado nos clientes
+    for i, cliente in enumerate(df1['RAZÃO SOCIAL']):
+        # Informações planilha RESUMO
+        memorando = df1.loc[i, 'Nº MEMO']
+        cnpj_cpf = df1.loc[i, 'CNPJ/MF Nº - CPF/MF Nº']
+        data_pagamento = df1.loc[i, 'PAGAMENTO'].strftime("%d/%m/%Y")
+        data_vencimento = df1.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
+        data_repasse = df1.loc[i, 'REPASSE'].strftime("%d/%m/%Y")
+        n_convenio = df1.loc[i, 'CONVÊNIO']
 
-    # Pegando valores do excel e adicionando a lista RESUMO
-    for row in sheet_RESUMO.iter_rows(values_only=True):
-        memorandos.append(row[0])
-        datas_pagamento.append(row[1])
-        datas_vencimento.append(row[2])
-        datas_repasse.append(row[3])
-        convenios_resumo.append(row[4])
-        clientes.append(row[6])
-        cnpjs_cpfs.append(row[7])
-        nomes_mutuarios.append(row[9])
+        # Informações planilha REPASSES
+        convenios_repasse = df2['CODCOOP'].tolist()
+        clientes_repasse = df2['NOME CLIENTE'].tolist()
 
-    # PLANILHA 2 (REPASSES)
-    # Lista de informações REPASSES
-    cpfs = []
-    mutuarios = []
-    repasses = []
-    valores_repassados = []
-    convenios_repasse = []
+        # Data hoje
+        data_manuscrita_hoje = data_manuscrita(datetime.now())
 
-    # Pegando valores do excel e adicionando a lista REPASSES
-    for row in sheet_REPASSES.iter_rows(values_only=True):
-        cpfs.append(row[0])
-        mutuarios.append(row[1])
-        repasses.append(row[2])
-        convenios_repasse.append(row[4])
-        valores_repassados.append(row[5])
-
-    # Gerando os arquivos baseado naS linhaS (len(clientes))
-    for n in range(len(clientes)):
-        if n == 0:
-            continue
-        if clientes[n] == '' or clientes[n] == None:
-            break
-        else:
-            memorando = memorandos[n]
-            cliente = clientes[n]
-            cnpj_cpf = cnpjs_cpfs[n]
-            data_pagamento = datas_pagamento[n].strftime("%d/%m/%Y")
-            data_vencimento = datas_vencimento[n].strftime("%d/%m/%Y")
-            data_repasse = datas_repasse[n].strftime("%d/%m/%Y")
-            convenio = convenios_resumo[n]
-            nome_mutuario = nomes_mutuarios[n]
-        
-        if convenio not in convenios_repasse:
+        if n_convenio not in convenios_repasse:
             continue
 
-        if convenio == 0 and cliente not in mutuarios:
+        if n_convenio == 0 and cliente not in clientes_repasse:
             continue
 
         s = 0
-        if cliente in mutuarios:
-            for mutuario in mutuarios:
+        if cliente in clientes_repasse:
+            for mutuario in clientes_repasse:
                 if cliente == mutuario:
-                    convenio_avaliador = convenios_repasse[s]
+                    convenio_avaliador = df2.loc[s, 'CODCOOP']
                 s += 1
 
             if convenio_avaliador != 0:
                 continue
 
 
-        estilos = getSampleStyleSheet()
+        getSampleStyleSheet()
 
         nome_do_arquivo = F'{GET_PATH}/Documentos/Oficios/Oficio de {cliente}.pdf'
 
@@ -163,11 +124,11 @@ def gerar_oficio_bagri():
         valores_repassados_conveniados = []
 
         for i in convenios_repasse:
-            if i == convenio:
-                cpfs_conveniados.append(cpfs[m])
-                mutuario_conveniados.append(mutuarios[m])
-                repasse_conveniado.append(repasses[m])
-                valores_repassados_conveniados.append(valores_repassados[m])
+            if i == n_convenio:
+                cpfs_conveniados.append(df2.loc[m, 'DOC.IDENT.'])
+                mutuario_conveniados.append(df2.loc[m, 'NOME CLIENTE'])
+                repasse_conveniado.append(df2.loc[m, 'DATA'])
+                valores_repassados_conveniados.append(df2.loc[m, 'VALOR R$'])
             m += 1
 
         # Cabeçalho da tabela
@@ -185,7 +146,7 @@ def gerar_oficio_bagri():
                     dados_tabela.append(linha)
                 c += 1
 
-        if cliente not in mutuario_conveniados and convenio != 0:
+        if cliente not in mutuario_conveniados and n_convenio != 0:
             for row_count in range(len(mutuario_conveniados)):
                 linha = [
                     cpfs_conveniados[row_count], mutuario_conveniados[row_count], repasse_conveniado[row_count].strftime("%d/%m/%Y"), 
