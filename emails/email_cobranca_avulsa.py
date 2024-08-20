@@ -36,22 +36,23 @@ def enviar_email_cobranca_avulsa():
     CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
 
     # Abrindo aba do Excel
-    df = pd.read_excel(CAMINHO_EXCEL, sheet_name=f'{nome_mes_atual} - {ano_atual}')
+    df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='COBRANÇA_AVULSA')
+    df2 = pd.read_excel(CAMINHO_EXCEL, sheet_name=f'COBRANÇA_AVULSA')
 
     # Gerador
-    for i, mutuario_plan1 in enumerate(df['Mutuário']):
+    for i, mutuario_plan1 in enumerate(df1['Mutuário']):
         # Informações para o corpo do email
-        plano = df.loc[i, 'Nº Plano']
-        data_vencimento = df.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
-        valor_parcela = df.loc[i, 'Valor Prestação R$']
+        plano = df1.loc[i, 'Nº Plano']
+        data_vencimento = df1.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
+        valor_parcela = df1.loc[i, 'Valor Prestação R$']
 
         if data_vencimento in datas_habituais:
             continue
 
         # E-mails de Envio
-        for n, mutuario_plan2 in enumerate(df['MUTUARIO']):
+        for n, mutuario_plan2 in enumerate(df1['MUTUARIO']):
             if mutuario_plan1 == mutuario_plan2:
-                email_a_enviar = df.loc[n, 'E-MAIL']
+                email_a_enviar = df2.loc[n, 'E-MAIL']
 
         email.To = email_a_enviar
 
@@ -64,18 +65,12 @@ def enviar_email_cobranca_avulsa():
 
         # Corpo do email
         email.BodyFormat = 2
-        email.HTMLBody = f"""
-        <html>
-        <body>
-        <p>Prezados: {mutuario_plan1}.</p>
-        <p>Seguem os valores com o vencimento em {data_vencimento}:</p>
-        <p>Plano: {plano} Valor da parcela: R$ {ponto_para_virgula(valor_parcela)}</p>
-        <p>Informamos que o documento para pagamento já está disponível no Internet Banking do BRDE.</p>
-        <p>Atenciosamente,</p>
-        <img src='cid:Assinatura.png'>
-        </body>
-        </html>
-        """
+        email.HTMLBody = df1.loc[0, 'CORPO EMAIL HTML'].format(
+            MUTUARIO=mutuario_plan1,
+            PLANO=plano,
+            DATA_VENCIMENTO=data_vencimento,
+            VALOR_PARCELA=valor_parcela,
+        )
         email.HTMLBody = email.HTMLBody.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
