@@ -62,3 +62,4 @@ def enviar_email_vencimento_cba():
 
         # Enviando E-mail
         email.Send()
+        break

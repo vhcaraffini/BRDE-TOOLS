@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
 
         # # Carregando a imagem usando QPixmap
         image_label = QLabel()
-        pixmap = QPixmap(f"{diretorio_atual}/images/logo_BRDE.png")
+        pixmap = QPixmap(f"{diretorio_atual}/arquivos/logo_BRDE.png")
         pixmap_redimensionado = pixmap.scaled(700, 300)
         image_label.setPixmap(pixmap_redimensionado)
         layout_window_main.addWidget(image_label)
@@ -97,9 +97,9 @@ class MainWindow(QMainWindow):
         button_to_window_emails.clicked.connect(self.show_window5)
         layout_window_main.addWidget(button_to_window_emails)
 
-        button_to_window_posicao = QPushButton("Gerador Posição Fim do Mês")
-        button_to_window_posicao.clicked.connect(self.show_window6)
-        layout_window_main.addWidget(button_to_window_posicao)
+        # button_to_window_posicao = QPushButton("Gerador Posição Fim do Mês")
+        # button_to_window_posicao.clicked.connect(self.show_window6)
+        # layout_window_main.addWidget(button_to_window_posicao)
 
         self.stacked_widget.addWidget(self.window_BRDE_TOOLS)
 

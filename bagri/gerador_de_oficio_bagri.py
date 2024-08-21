@@ -16,7 +16,7 @@ def gerar_oficio_bagri():
     GET_PATH = get_user_home_folder()
     create_folder(GET_PATH, 'Documentos')
     create_folder(f'{GET_PATH}/Documentos', 'Oficios')
-    PATH_IMAGE = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens'
+    PATH_IMAGE = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/arquivos'
     
     # Caminho do excel
     root = tk.Tk()

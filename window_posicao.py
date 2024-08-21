@@ -21,12 +21,3 @@ class window_posicao(QWidget):
 
     def return_main_window(self):
         self.main_window.return_main_window()
-
-    # def enviador_email_primeiro_vencimento(self):
-    #     enviar_email_primeiro_vencimento()
-
-    # def enviador_mail_vencimento_cba(self):
-    #     enviar_email_vencimento_cba()
-
-    # def enviador_mail_cobranca_avulsa(self):
-    #     enviar_email_cobranca_avulsa()

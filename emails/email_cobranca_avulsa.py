@@ -37,43 +37,44 @@ def enviar_email_cobranca_avulsa():
 
     # Abrindo aba do Excel
     df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='COBRANÇA_AVULSA')
-    df2 = pd.read_excel(CAMINHO_EXCEL, sheet_name=f'COBRANÇA_AVULSA')
+    df2 = pd.read_excel(CAMINHO_EXCEL, sheet_name=f'MAILING')
 
     # Gerador
     for i, mutuario_plan1 in enumerate(df1['Mutuário']):
         # Informações para o corpo do email
-        plano = df1.loc[i, 'Nº Plano']
-        data_vencimento = df1.loc[i, 'VENCIMENTO'].strftime("%d/%m/%Y")
-        valor_parcela = df1.loc[i, 'Valor Prestação R$']
+        plano = df1.loc[i, 'Plano']
+        data_vencimento = df1.loc[i, 'Vencimento'].strftime("%d/%m/%Y")
+        valor_parcela = ponto_para_virgula(df1.loc[i, 'Total em R$'])
+
+        # Definindo formato de envio
+        outlook = win32.Dispatch('outlook.application')
+        email = outlook.CreateItem(0)
 
         if data_vencimento in datas_habituais:
             continue
 
         # E-mails de Envio
-        for n, mutuario_plan2 in enumerate(df1['MUTUARIO']):
+        for n, mutuario_plan2 in enumerate(df2['MUTUARIOS']):
             if mutuario_plan1 == mutuario_plan2:
                 email_a_enviar = df2.loc[n, 'E-MAIL']
 
-        email.To = email_a_enviar
-
-        # Definindo formato de envio
-        outlook = win32.Dispatch('outlook.application')
-        email = outlook.CreateItem(0)
+        email.To = 'e.marcus.machado@brde.com.br'  # email_a_enviar
 
         # Assunto do e-mail
         email.Subject = f'VENCIMENTO {mutuario_plan1} {data_vencimento}'
 
         # Corpo do email
         email.BodyFormat = 2
-        email.HTMLBody = df1.loc[0, 'CORPO EMAIL HTML'].format(
+        corpo_email = df1.loc[0, 'CORPO EMAIL HTML'].format(
             MUTUARIO=mutuario_plan1,
             PLANO=plano,
             DATA_VENCIMENTO=data_vencimento,
             VALOR_PARCELA=valor_parcela,
         )
-        email.HTMLBody = email.HTMLBody.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
+        email.HTMLBody = corpo_email.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
-        # email.Send()
+        email.Send()
+        break
