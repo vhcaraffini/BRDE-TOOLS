@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
         self.resize(700, 500)
 
         # Definindo o ícone da janela
-        self.setWindowIcon(QIcon(f"{diretorio_atual}/images/BRDE_favicon.png"))
+        self.setWindowIcon(QIcon(f"{diretorio_atual}/arquivos/BRDE_favicon.png"))
 
         # Configuração global de estilo
         self.setStyleSheet("""

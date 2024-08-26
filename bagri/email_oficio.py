@@ -42,22 +42,11 @@ def enviar_oficio_bagri():
 
         # Corpo do email
         email.BodyFormat = 2
-        email.HTMLBody = f"""
-        <html>
-        <body>
-        <p>Prezados:</p>
-        <p>Segue em anexo comunicado referente ao repasse da equalização de operações Banco do Agricultor referente as parcelas com vencimento em {data_vencimento}.</p>
-        <p> </p>
-        <p>Excepcionalmente, devido ao incidente cibernético ocorrido no BRDE, estamos enviando extemporaneamente a relação dos repasses do Banco do Agricultor referente as parcelas de 15/05/2024</p>
-        <p> </p>
-        <p>O BRDE realizou o repasse diretamente na C/C dos mutuários no dia {data_repasse}.</p>
-        <p> </p>
-        <p>Atenciosamente,</p>
-        <img src='cid:Assinatura.png'>
-        </body>
-        </html>
-        """
-        email.HTMLBody = email.HTMLBody.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
+        corpo_email = df.loc[0, 'CORPO EMAIL HTML'].format(
+            DATA_REPASSE=data_repasse,
+            DATA_VENCIMENTO=data_vencimento,
+        )
+        email.HTMLBody = corpo_email.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
         # Adicionando Anexo
         convenio_excel = df.loc[i, 'RAZÃO SOCIAL']
