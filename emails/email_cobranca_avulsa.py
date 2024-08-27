@@ -4,6 +4,8 @@ import tkinter as tk
 import pandas as pd
 import datetime
 import locale
+import os
+
 
 # Definir a localização para português do Brasil
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
@@ -33,7 +35,7 @@ def enviar_email_cobranca_avulsa():
     root = tk.Tk()
     root.withdraw()
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
+    CAMINHO_IMAGEM = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos/Assinatura.png'
 
     # Abrindo aba do Excel
     df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='COBRANÇA_AVULSA')
@@ -58,7 +60,7 @@ def enviar_email_cobranca_avulsa():
             if mutuario_plan1 == mutuario_plan2:
                 email_a_enviar = df2.loc[n, 'E-MAIL']
 
-        email.To = 'e.marcus.machado@brde.com.br'  # email_a_enviar
+        email.To = email_a_enviar
 
         # Assunto do e-mail
         email.Subject = f'VENCIMENTO {mutuario_plan1} {data_vencimento}'
@@ -73,8 +75,12 @@ def enviar_email_cobranca_avulsa():
         )
         email.HTMLBody = corpo_email.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
+        # Anexar a imagem da assinatura
+        attachment = email.Attachments.Add(CAMINHO_IMAGEM)
+        attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "minhaassinatura")
+
+        # Enviando em nome de:
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
         email.Send()
-        break

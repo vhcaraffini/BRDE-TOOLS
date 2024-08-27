@@ -3,6 +3,7 @@ import win32com.client as win32
 from tkinter import filedialog
 import tkinter as tk
 import pandas as pd
+import os
 
 def enviar_oficio_bagri():
     # Caminhos
@@ -10,7 +11,7 @@ def enviar_oficio_bagri():
     root.withdraw()
 
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))    
-    CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
+    CAMINHO_IMAGEM = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos/Assinatura.png'
     GET_PATH = get_user_home_folder()
 
     # Abrindo abas do Excel

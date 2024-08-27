@@ -7,7 +7,7 @@ from window_emails import window_email
 from window_posicao import window_posicao
 import os
 
-diretorio_atual = os.getcwd()
+diretorio_atual = os.path.dirname(os.path.realpath(__file__))
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -70,8 +70,6 @@ class MainWindow(QMainWindow):
         # Janela principal
         self.window_BRDE_TOOLS = QWidget()
         layout_window_main = QVBoxLayout(self.window_BRDE_TOOLS)
-        # label_main_window = QLabel("BRDE TOOLS")
-        # layout_window_main.addWidget(label_main_window)
 
         # # Carregando a imagem usando QPixmap
         image_label = QLabel()

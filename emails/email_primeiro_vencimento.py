@@ -1,12 +1,17 @@
 import win32com.client as win32
-import pandas as pd
-import tkinter as tk
 from tkinter import filedialog
+import tkinter as tk
+import pandas as pd
+import os
 
 def enviar_email_primeiro_vencimento():
-    # Caminhos
+    # Obtendo Caminho Excel
+    root = tk.Tk()
+    root.withdraw()
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    CAMINHO_APP_ARQUIVOS = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Documentos/Python/Interface_brde/arquivos'
+    
+    # Caminho Arquivos
+    CAMINHO_APP_ARQUIVOS = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos'
     CAMINHO_PDF = f'{CAMINHO_APP_ARQUIVOS}/BRDE - Internet Banking - Tutorial Acesso.pdf'
     CAMINHO_IMAGEM = f'{CAMINHO_APP_ARQUIVOS}/Assinatura.png'
 
@@ -25,7 +30,7 @@ def enviar_email_primeiro_vencimento():
             if mutuario_plan1 == mutuario_plan2:
                 email_a_enviar = df2.loc[n, 'E-MAIL']
 
-        email.To = 'e.marcus.machado@brde.com.br'  # email_a_enviar
+        email.To = email_a_enviar
 
         # Informações para o corpo do email
         plano = df1.loc[i, 'Plano']
@@ -48,8 +53,12 @@ def enviar_email_primeiro_vencimento():
         # Adicionando Anexo
         email.Attachments.Add(CAMINHO_PDF)
 
+        # Anexar a imagem da assinatura
+        attachment = email.Attachments.Add(CAMINHO_IMAGEM)
+        attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "minhaassinatura")
+
+        # Enviando em nome de:
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
         email.Send()
-        break

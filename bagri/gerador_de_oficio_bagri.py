@@ -10,13 +10,14 @@ from tkinter import filedialog
 from functools import partial
 import tkinter as tk
 import pandas as pd
+import os
 
 
 def gerar_oficio_bagri():
     GET_PATH = get_user_home_folder()
     create_folder(GET_PATH, 'Documentos')
     create_folder(f'{GET_PATH}/Documentos', 'Oficios')
-    PATH_IMAGE = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/arquivos'
+    PATH_IMAGE = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos'
     
     # Caminho do excel
     root = tk.Tk()

@@ -1,7 +1,8 @@
-import win32com.client as win32
-import pandas as pd
-import tkinter as tk
 from tkinter import filedialog
+import win32com.client as win32
+import tkinter as tk
+import pandas as pd
+import os
 
 def enviar_email_extrato():
     # Caminhos
@@ -9,7 +10,7 @@ def enviar_email_extrato():
     root = tk.Tk()
     root.withdraw()
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
+    CAMINHO_IMAGEM = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos/Assinatura.png'
 
     # Abrindo aba do Excel
     df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='EMAIL_EXTRATO')
@@ -29,7 +30,7 @@ def enviar_email_extrato():
         
         # Destinatarios
         email.To = email_a_enviar
-        email.CC = f'{email_copia}; e.beatriz.juliatto@brde.com.br; acompanhamento.pr@brde.com.br'
+        email.CC = f'{email_copia}; e.beatriz.juliatto@brde.com.br'
 
         # Assunto do e-mail
         email.Subject = f'Solicitação Extrato Atualizado - {empresa}'
@@ -43,9 +44,13 @@ def enviar_email_extrato():
         )
 
         email.HTMLBody = corpo_email.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
+        
+        # Anexar a imagem da assinatura
+        attachment = email.Attachments.Add(CAMINHO_IMAGEM)
+        attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "minhaassinatura")
 
-        # Remetente
-        email.SentOnBehalfOfName = 'e.marcus.machado@brde.com.br'
+        # Enviando em nome de:
+        email.SentOnBehalfOfName = 'acompanhamento.pr@brde.com.br'
 
         # Enviando E-mail
         email.Send()

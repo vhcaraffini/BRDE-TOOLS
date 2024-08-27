@@ -1,7 +1,9 @@
 import win32com.client as win32
+from tkinter import filedialog
 import pandas as pd
 import tkinter as tk
-from tkinter import filedialog
+import os
+
 
 def ponto_para_virgula(valor):
     str_valor_rounded = str(round(valor, 2))
@@ -18,7 +20,7 @@ def enviar_email_vencimento_cba():
     root = tk.Tk()
     root.withdraw()
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))
-    CAMINHO_IMAGEM = 'C:/Users/e.marcus.machado/OneDrive - Banco Regional de Desenvolvimento do Extremo Sul/Imagens/Assinatura.png'
+    CAMINHO_IMAGEM = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos/Assinatura.png'
 
     # Abrindo aba do Excel
     df1 = pd.read_excel(CAMINHO_EXCEL, sheet_name='EMAILS_VALOR')
@@ -35,7 +37,7 @@ def enviar_email_vencimento_cba():
             if mutuario_plan1 == mutuario_plan2:
                 email_a_enviar = df2.loc[n, 'E-MAIL']
 
-        email.To = 'e.marcus.machado@brde.com.br'  # email_a_enviar
+        email.To = email_a_enviar
 
         # Informações para o corpo do email
         plano = int(df1.loc[i, 'Plano'])
@@ -58,8 +60,12 @@ def enviar_email_vencimento_cba():
 
         email.HTMLBody = corpo_email.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
+        # Anexar a imagem da assinatura
+        attachment = email.Attachments.Add(CAMINHO_IMAGEM)
+        attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "minhaassinatura")
+
+        # Enviando em nome de:
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail
         email.Send()
-        break

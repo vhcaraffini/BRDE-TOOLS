@@ -14,3 +14,7 @@ def create_folder(folder_path, folder_name):
     os.makedirs(folder_full_path, exist_ok=True)
 
 print(get_user_home_folder())
+
+
+def error():
+    ...
