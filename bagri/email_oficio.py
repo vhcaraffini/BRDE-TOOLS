@@ -1,4 +1,4 @@
-from functions_for_windows import get_user_home_folder
+from functions_for_windows import get_mother_folder
 import win32com.client as win32
 from tkinter import filedialog
 import tkinter as tk
@@ -12,7 +12,7 @@ def enviar_oficio_bagri():
 
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))    
     CAMINHO_IMAGEM = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos/Assinatura.png'
-    GET_PATH = get_user_home_folder()
+    GET_PATH = get_mother_folder()
 
     # Abrindo abas do Excel
     df = pd.read_excel(CAMINHO_EXCEL, sheet_name='RESUMO')
@@ -51,8 +51,13 @@ def enviar_oficio_bagri():
 
         # Adicionando Anexo
         convenio_excel = df.loc[i, 'RAZÃO SOCIAL']
-        email.Attachments.Add(F'{GET_PATH}/Documentos/Oficios/Oficio de {convenio_excel}.pdf')
+        email.Attachments.Add(F'{GET_PATH}/Oficios/Oficio de {convenio_excel}.pdf')
 
+        # Anexar a imagem da assinatura
+        attachment = email.Attachments.Add(CAMINHO_IMAGEM)
+        attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "minhaassinatura")
+
+        # Enviando em nome de:
         email.SentOnBehalfOfName = 'secob.pr@brde.com.br'
 
         # Enviando E-mail

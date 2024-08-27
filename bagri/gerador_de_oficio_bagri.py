@@ -1,6 +1,6 @@
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, PageBreak, PageTemplate, Image
 from bagri.funcoes import data_manuscrita, transforma_ponto_em_virgula, configura_paragrafo, cabecalho_e_rodape
-from functions_for_windows import get_user_home_folder, create_folder
+from functions_for_windows import get_mother_folder, create_folder
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus.frames import Frame
 from datetime import datetime
@@ -14,9 +14,8 @@ import os
 
 
 def gerar_oficio_bagri():
-    GET_PATH = get_user_home_folder()
-    create_folder(GET_PATH, 'Documentos')
-    create_folder(f'{GET_PATH}/Documentos', 'Oficios')
+    GET_PATH = get_mother_folder()
+    create_folder(GET_PATH, 'Oficios')
     PATH_IMAGE = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos'
     
     # Caminho do excel
@@ -63,7 +62,7 @@ def gerar_oficio_bagri():
 
         getSampleStyleSheet()
 
-        nome_do_arquivo = F'{GET_PATH}/Documentos/Oficios/Oficio de {cliente}.pdf'
+        nome_do_arquivo = F'{GET_PATH}/Oficios/Oficio de {cliente}.pdf'
 
         TAMANHO_DAS_PAGINAS = pagesizes.portrait(pagesizes.A4)
 
