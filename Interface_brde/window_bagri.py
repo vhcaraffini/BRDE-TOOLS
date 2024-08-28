@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QVBoxLayout, QWidget, QLabel, QPushButton
 from bagri.gerador_de_oficio_bagri import gerar_oficio_bagri
 from bagri.email_oficio import enviar_oficio_bagri
 
+
 class window_oficio_bagri(QWidget):
     def __init__(self, main_window):
         super().__init__()
