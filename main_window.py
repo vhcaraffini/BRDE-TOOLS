@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
                 font-size: 17px;
             }
             QPushButton:hover {
-                background-color: #009688; /* Altere a cor quando passar o mouse */
+                background-color: #009688;
             }
             QLabel {
                 color: #007553;
@@ -66,6 +66,7 @@ class MainWindow(QMainWindow):
         # Adicione as outras janelas aqui
         self.add_windows()
 
+
     def add_windows(self):
         # Janela principal
         self.window_BRDE_TOOLS = QWidget()
@@ -83,17 +84,17 @@ class MainWindow(QMainWindow):
         button_to_window_ocorrencias.clicked.connect(self.show_window2)
         layout_window_main.addWidget(button_to_window_ocorrencias)
 
+        button_to_window_emails = QPushButton("Enviador de E-mails")
+        button_to_window_emails.clicked.connect(self.show_window5)
+        layout_window_main.addWidget(button_to_window_emails)
+
         button_to_window_bagri = QPushButton("Oficios Banco do Agricultor")
         button_to_window_bagri.clicked.connect(self.show_window3)
         layout_window_main.addWidget(button_to_window_bagri)
 
-        button_to_window_termos = QPushButton("Gerir Termos")
+        button_to_window_termos = QPushButton("Outros")
         button_to_window_termos.clicked.connect(self.show_window4)
         layout_window_main.addWidget(button_to_window_termos)
-
-        button_to_window_emails = QPushButton("Enviador de E-mails")
-        button_to_window_emails.clicked.connect(self.show_window5)
-        layout_window_main.addWidget(button_to_window_emails)
 
         # button_to_window_posicao = QPushButton("Gerador Posição Fim do Mês")
         # button_to_window_posicao.clicked.connect(self.show_window6)

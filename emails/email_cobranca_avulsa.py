@@ -1,3 +1,4 @@
+from functions_for_windows import show_popup
 import win32com.client as win32
 from tkinter import filedialog
 import tkinter as tk
@@ -5,7 +6,6 @@ import pandas as pd
 import datetime
 import locale
 import os
-
 
 # Definir a localização para português do Brasil
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
@@ -84,3 +84,5 @@ def enviar_email_cobranca_avulsa():
 
         # Enviando E-mail
         email.Send()
+    
+    show_popup('E-mails', f"E-mails enviados com sucesso")

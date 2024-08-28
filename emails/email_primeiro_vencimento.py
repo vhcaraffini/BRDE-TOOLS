@@ -1,3 +1,4 @@
+from functions_for_windows import show_popup
 import win32com.client as win32
 from tkinter import filedialog
 import tkinter as tk
@@ -62,3 +63,5 @@ def enviar_email_primeiro_vencimento():
 
         # Enviando E-mail
         email.Send()
+    
+    show_popup('E-mails', f"E-mails enviados com sucesso")
