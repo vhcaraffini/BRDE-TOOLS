@@ -1,4 +1,22 @@
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+import os
+
+
+def get_folder():
+    # Obter o caminho da área de trabalho
+    caminho_area_de_trabalho = os.path.join(os.path.expanduser('~'), 'Desktop')
+
+    # Nome da nova pasta que você deseja criar
+    nome_pasta = "Oficios"
+
+    # Caminho completo para a nova pasta
+    caminho_pasta = os.path.join(caminho_area_de_trabalho, nome_pasta)
+
+    # Criar a pasta
+    if not os.path.exists(caminho_pasta):
+        os.makedirs(caminho_pasta)
+    
+    return caminho_pasta
 
 
 def data_manuscrita(data):

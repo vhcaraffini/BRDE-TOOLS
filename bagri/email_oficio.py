@@ -1,4 +1,5 @@
-from functions_for_windows import get_mother_folder
+from functions_for_windows import show_popup
+from bagri.funcoes import get_folder
 import win32com.client as win32
 from tkinter import filedialog
 import tkinter as tk
@@ -12,7 +13,7 @@ def enviar_oficio_bagri():
 
     CAMINHO_EXCEL = filedialog.askopenfilename(initialdir="/", title="Selecione um arquivo", filetypes=(("Arquivos do Excel", "*.xlsx"), ("Todos os arquivos", "*.*")))    
     CAMINHO_IMAGEM = f'{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}/arquivos/Assinatura.png'
-    GET_PATH = get_mother_folder()
+    GET_PATH = get_folder()
 
     # Abrindo abas do Excel
     df = pd.read_excel(CAMINHO_EXCEL, sheet_name='RESUMO')
@@ -62,3 +63,5 @@ def enviar_oficio_bagri():
 
         # Enviando E-mail
         email.Send()
+    
+    show_popup('Oficios', f"E-mails de Oficio enviados com sucesso")

@@ -1,6 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+from functions_for_windows import show_popup
 from selenium.webdriver.common.by import By
 from tkinter import filedialog
 from selenium import webdriver
@@ -83,3 +84,5 @@ def registrar_ocorrencia_email(data):
         finalizando = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.XPATH, '//*[@id="pagination"]/ul/li[3]/a')))
         finalizando.click()
         mutuarios_anteriores.append(mutuario)
+    
+    show_popup('Ocorrencias', f"Ocorrencias registradas com sucesso")

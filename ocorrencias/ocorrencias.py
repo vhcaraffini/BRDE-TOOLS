@@ -1,6 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+from functions_for_windows import show_popup
 from selenium.webdriver.common.by import By
 from datetime import datetime
 from tkinter import filedialog
@@ -81,3 +82,5 @@ def registrar_ocorrencia_da_data(data):
 
             finalizando = WebDriverWait(driver, TIMER).until(EC.presence_of_element_located((By.XPATH, '//*[@id="pagination"]/ul/li[3]/a')))
             finalizando.click()
+    
+    show_popup('Ocorrencias', f"Ocorrencias registradas com sucesso")

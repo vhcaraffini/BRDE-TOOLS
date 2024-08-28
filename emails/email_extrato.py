@@ -1,3 +1,4 @@
+from functions_for_windows import show_popup
 from tkinter import filedialog
 import win32com.client as win32
 import tkinter as tk
@@ -54,3 +55,5 @@ def enviar_email_extrato():
 
         # Enviando E-mail
         email.Send()
+
+    show_popup('E-mails', f"E-mails de Extrato enviados com sucesso")
