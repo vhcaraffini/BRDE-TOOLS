@@ -51,7 +51,10 @@ def enviar_email_extrato():
         attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "minhaassinatura")
 
         # Enviando em nome de:
-        email.SentOnBehalfOfName = 'acompanhamento.pr@brde.com.br'
+        try:
+            email.SentOnBehalfOfName = 'acompanhamento.pr@brde.com.br'
+        except:
+            email.SentOnBehalfOfName = 'e.beatriz.juliatto@brde.com.br'
 
         # Enviando E-mail
         email.Send()

@@ -16,7 +16,7 @@ def ponto_para_virgula(valor):
             novo_valor += n
     return novo_valor
 
-def enviar_email_vencimento_cba():
+def enviar_email_parcela():
     # Caminhos
     root = tk.Tk()
     root.withdraw()
