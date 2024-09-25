@@ -19,15 +19,16 @@ datas_habituais = [f'01/{mes_atual}/{ano_atual}', f'10/{mes_atual}/{ano_atual}',
                    f'15/{mes_atual}/{ano_atual}', f'18/{mes_atual}/{ano_atual}',
                    f'23/{mes_atual}/{ano_atual}', f'20/{mes_atual}/{ano_atual}',]
 
+# Função para formatar o número como moeda brasileira
 def ponto_para_virgula(valor):
-    str_valor_rounded = str(round(valor, 2))
-    if '.' in str_valor_rounded:
-        novo_valor = ''
-        for n in str_valor_rounded:
-            if n == '.':
-                n = ','
-            novo_valor += n
-    return novo_valor
+    try:
+        # Formatar como moeda com separador de milhar e duas casas decimais
+        valor_formatado = locale.currency(valor, grouping=True, symbol=False)
+        # Remover o símbolo da moeda (R$), deixando só o valor
+        return valor_formatado.replace('R$', '').strip()
+    except Exception as e:
+        print(f"Erro ao formatar valor: {str(e)}")
+        return str(valor)
 
 
 def enviar_email_cobranca_avulsa():
@@ -66,13 +67,13 @@ def enviar_email_cobranca_avulsa():
         email.Subject = f'VENCIMENTO {mutuario_plan1} {data_vencimento}'
 
         # Corpo do email
-        email.BodyFormat = 2
-        corpo_email = df1.loc[0, 'CORPO EMAIL HTML'].format(
-            MUTUARIO=mutuario_plan1,
-            PLANO=plano,
-            DATA_VENCIMENTO=data_vencimento,
-            VALOR_PARCELA=valor_parcela,
-        )
+corpo_email = df1.loc[0, 'CORPO EMAIL HTML'].format(
+    MUTUARIO=mutuario_plan1,
+    PLANO=plano,
+    DATA_VENCIMENTO=data_vencimento,
+    VALOR_PARCELA=ponto_para_virgula(df1.loc[i, 'Total em R$']),
+)
+        
         email.HTMLBody = corpo_email.replace('<body>', '<body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">')
 
         # Anexar a imagem da assinatura
@@ -86,3 +87,8 @@ def enviar_email_cobranca_avulsa():
         email.Send()
     
     show_popup('E-mails', f"E-mails enviados com sucesso")
+
+# Fechar instância do Outlook
+        outlook.Quit()
+    except Exception as e:
+        print(f"Erro: {str(e)}")
